@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import store from '@/store';
 
-import LKMain from './views/main';
+import LKMain from './pages/main';
 
 export default function App() {
   return (

@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo } from 'react';
 import { NavLink } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
 
@@ -8,18 +8,8 @@ import {
   TopMenu
 } from './style';
 
-import {
-  getBanners
-} from '@/network/discover';
-
 export default memo(function LKDiscover(props) {
   const { route } = props;
-
-  useEffect(() => {
-    getBanners().then(res => {
-      console.log(res);
-    })
-  }, [])
 
   return (
     <>

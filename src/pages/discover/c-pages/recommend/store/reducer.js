@@ -1,8 +1,9 @@
+import { Map } from 'immutable';
 import * as actionTypes from './constants';
 
-const initialState = {
+const initialState = Map({
   banners: []
-}
+})
 
 function reducer(state = initialState, action) {
   switch (action.type) {
