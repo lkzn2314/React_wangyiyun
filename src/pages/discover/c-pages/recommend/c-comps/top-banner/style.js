@@ -21,6 +21,20 @@ export const BannerLeft = styled.div`
       width: 100%;
     }
   }
+
+  /* 轮播图指示圈样式 */
+  .ant-carousel .slick-dots li button {
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+
+    &:hover {
+      background-color: red;
+    }
+  }
+  .ant-carousel .slick-dots li.slick-active button{
+    background-color: red;
+  }
 `
 
 export const BannerRight = styled.a.attrs({

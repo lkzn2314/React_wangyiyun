@@ -36,7 +36,8 @@ export default memo(function Top0Banners() {
         <BannerWrapper bgImage={bgImage}>
             <div className="banner wrap-v2">
                 <BannerLeft>
-                    <Carousel effect="fade" autoplay ref={bannerRef} beforeChange={beforeBannerChange}>
+                    <Carousel effect="fade" ref={bannerRef}
+                        autoplay beforeChange={beforeBannerChange} >
                         {
                             banners.map(item => {
                                 return (
