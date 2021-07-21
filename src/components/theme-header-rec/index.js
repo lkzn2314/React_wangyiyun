@@ -3,13 +3,15 @@ import React, { memo } from 'react';
 import { HeaderWrapper } from './style';
 
 export default memo(function ThemeHeaderRMC(props) {
+  const { title = 'Title', tabs = [] } = props;
+
   return (
-    <HeaderWrapper>
+    <HeaderWrapper className="sprite_02">
       <div className="left">
-        <div className="title">{props.title}</div>
+        <div className="title">{title}</div>
         <div className="keyword">
           {
-            props.tabs.map(item => {
+            tabs.map(item => {
               return (
                 <div className="item" key={item}>
                   {item}
@@ -22,7 +24,7 @@ export default memo(function ThemeHeaderRMC(props) {
       </div>
       <div className="right">
         更多
-        <i className="icon" />
+        <i className="icon sprite_02" />
       </div>
     </HeaderWrapper>
   )
