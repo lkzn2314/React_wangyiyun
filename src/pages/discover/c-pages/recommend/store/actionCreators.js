@@ -2,7 +2,8 @@ import * as actionTypes from './constants';
 
 import {
   getBanners,
-  getHotRecommends
+  getHotRecommends,
+  getNewDiscs
 } from '@/network/discover';
 
 const changeBannersAction = res => ({
@@ -28,6 +29,20 @@ export const getHotRecommendsAction = limit => {
     getHotRecommends(limit).then(res => {
       console.log(res);
       dispatch(changeHotRecommendsAction(res))
+    })
+  }
+}
+
+const changeNewDiscsAction = res => ({
+  type: actionTypes.CHANGE_NEW_DISC,
+  newDiscs: res.albums
+})
+
+export const getNewDiscsAction = limit => {
+  return dispatch => {
+    getNewDiscs(limit).then(res => {
+      console.log(res);
+      dispatch(changeNewDiscsAction(res))
     })
   }
 }

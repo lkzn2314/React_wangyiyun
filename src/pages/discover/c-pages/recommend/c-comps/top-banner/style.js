@@ -6,7 +6,7 @@ export const BannerWrapper = styled.div`
   .banner {
     display: flex;
     position: relative;
-    height: 270px;
+    height: 285px;
   }
 `
 
@@ -15,10 +15,11 @@ export const BannerLeft = styled.div`
 
   .banner-item {
     overflow: hidden;
-    height: 270px;
+    height: 285px;
     
     .image {
       width: 100%;
+      height: 285px;
     }
   }
 
@@ -32,8 +33,13 @@ export const BannerLeft = styled.div`
       background-color: red;
     }
   }
+
   .ant-carousel .slick-dots li.slick-active button{
     background-color: red;
+  }
+  
+  .ant-carousel .slick-dots-bottom {
+    bottom: 18px;
   }
 `
 
@@ -42,7 +48,7 @@ export const BannerRight = styled.a.attrs({
   target: "_blank"
 })`
   width: 254px;
-  height: 270px;
+  height: 285px;
   background: url(${require("@/assets/img/download.png")});
 `
 
@@ -50,8 +56,7 @@ export const BannerControl = styled.div`
   position: absolute;
   left: 0;
   right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 40%;
 
   .btn {
     position: absolute;
