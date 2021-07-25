@@ -23,3 +23,12 @@ export function getNewDiscs(limit) {
     }
   })
 }
+
+export function getRankings(idx) {
+  return request({
+    url: '/top/list',
+    params: {
+      idx
+    }
+  })
+}

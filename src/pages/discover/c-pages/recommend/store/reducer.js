@@ -4,7 +4,10 @@ import * as actionTypes from './constants';
 const initialState = Map({
   banners: [],
   hotRecommends: [],
-  newDiscs: []
+  newDiscs: [],
+  upRankings: {},
+  newRankings: {},
+  originRankings: {}
 })
 
 function reducer(state = initialState, action) {
@@ -15,6 +18,12 @@ function reducer(state = initialState, action) {
       return state.set('hotRecommends', action.hotRecommends)
     case actionTypes.CHANGE_NEW_DISC:
       return state.set('newDiscs', action.newDiscs)
+    case actionTypes.CHANGE_UP_RANKING:
+      return state.set('upRankings', action.upRankings)
+    case actionTypes.CHANGE_NEW_RANKING:
+      return state.set('newRankings', action.newRankings)
+    case actionTypes.CHANGE_ORIGIN_RANKING:
+      return state.set('originRankings', action.originRankings)
     default:
       return state
   }

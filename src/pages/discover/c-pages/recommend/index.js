@@ -17,8 +17,8 @@ export default memo(function Recommend() {
   return (
     <RecommendWraper>
       <TopBanners />
-      <Content>
-        <RecommendLeft className="wrap-v2">
+      <Content className="wrap-v2">
+        <RecommendLeft>
           <HotRecommend />
           <NewDisc />
           <Ranking />

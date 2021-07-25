@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const RecommendWraper = styled.div`
-
+  background-color: #f5f5f5;
 `
 export const Content = styled.div`
   display: flex;

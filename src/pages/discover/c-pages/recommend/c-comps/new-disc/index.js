@@ -1,11 +1,16 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo, useEffect, useRef } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { Carousel } from 'antd';
 
 import ThemeHeaderRec from '@/components/theme-header-rec';
+import DiscsCover from '@/components/discs-cover';
 
 import { getNewDiscsAction } from '../../store/actionCreators';
 
-import { DiscWrapper } from './style';
+import {
+  DiscWrapper,
+  Content
+} from './style';
 
 export default memo(function NewDisc() {
 
@@ -14,20 +19,50 @@ export default memo(function NewDisc() {
     newDiscs: state.getIn(['recommend', 'newDiscs'])
   }), shallowEqual)
 
+  const carouselRef = useRef();
   useEffect(() => {
-    dispatch(getNewDiscsAction(10))
+    dispatch(getNewDiscsAction(15))
   }, [dispatch]);
 
   return (
     <DiscWrapper>
       <ThemeHeaderRec title="新碟上架" />
-      {
-        newDiscs.map(item => {
-          return (
-            <div key={item.id}>{item.name}</div>
-          )
-        })
-      }
-    </DiscWrapper>
+      <Content>
+        <i className="left arrow sprite_02" onClick={e => carouselRef.current.prev()} />
+        <i className="right arrow sprite_02" onClick={e => carouselRef.current.next()} />
+        <div className="disc">
+          <Carousel dots={false} speed={1200} ref={carouselRef}>
+            {
+              [0, 1, 2].map(index => {
+                return (
+                  <div className="disc-list" key={index}>
+                    {
+                      newDiscs.slice(index * 5, (index + 1) * 5).map(item => {
+                        return (<DiscsCover key={item.id} info={item} />)
+                      })
+                    }
+                  </div>
+                )
+              })
+            }
+          </Carousel>
+        </div>
+      </Content>
+      {/* <Carousel className="carousel">
+        {
+          [0, 1].map(index => {
+            return (
+              <div className="disc-list" key={index}>
+                {
+                  newDiscs.slice(index * 5, (index + 1) * 5).map(item => {
+                    return (<DiscsCover key={item.id} info={item} />)
+                  })
+                }
+              </div>
+            )
+          })
+        }
+      </Carousel> */}
+    </DiscWrapper >
   )
 })

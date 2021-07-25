@@ -6,6 +6,7 @@ import routes from '@/router';
 
 import WebHeader from '@/components/web-header';
 import WebFooter from '@/components/web-footer';
+import WebPlayer from '@/pages/player/web-player-bar';
 
 export default memo(function LKMain() {
 	return (
@@ -13,6 +14,7 @@ export default memo(function LKMain() {
 			<WebHeader />
 			{renderRoutes(routes)}
 			<WebFooter />
+			<WebPlayer />
 		</Router>
 	)
 })

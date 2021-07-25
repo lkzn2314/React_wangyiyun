@@ -23,6 +23,11 @@ export const HeaderWrapper = styled.div`
       display: flex;
 
       .item {
+        &:hover {
+          cursor: pointer;
+          text-decoration: underline;
+        }
+
         .divider {
           margin: 0 15px;
           color: #ccc;
@@ -34,6 +39,12 @@ export const HeaderWrapper = styled.div`
   .right {
     display: flex;
     align-items: center;
+    
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
     .icon {
       display: inline-block;
       width: 12px;
