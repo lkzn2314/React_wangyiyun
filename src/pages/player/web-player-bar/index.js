@@ -27,7 +27,7 @@ export default memo(function WebPlayerBar() {
     dispatch(getCurrentSongAction(1861640530))
   }, [dispatch])
 
-  const picUrl = (currentSong.al && currentSong.al.picUrl) || '未知歌曲';
+  const picUrl = currentSong.al && currentSong.al.picUrl;
   const singer = (currentSong.ar && currentSong.ar[0].name) || '未知歌手';
   const allTime = currentSong.dt || 0;
 
@@ -46,7 +46,7 @@ export default memo(function WebPlayerBar() {
           </a>
           <div className="info">
             <div className="song">
-              <span>{currentSong.name}</span>
+              <span>{currentSong.name || '未知歌曲'}</span>
               <span className="singer-name">{singer}</span>
               <i className="link playbar_sprite" />
               <a href="#/"> </a>
