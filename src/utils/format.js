@@ -1,6 +1,10 @@
 export function formatImgSize(imgUrl, size = 140) {
   return `${imgUrl}?param=${size}x${size}`;
-}
+};
+
+export function getSongPlay(id) {
+  return `https://music.163.com/song/media/outer/url?id=${id}.mp3`;
+};
 
 export function formatDate(timeStamp, fmt) {
   let date = new Date(timeStamp);
@@ -22,7 +26,7 @@ export function formatDate(timeStamp, fmt) {
     }
   }
   return fmt;
-}
+};
 function padLeftZero(str) {
   return ('00' + str).substr(str.length);
-}
+};
