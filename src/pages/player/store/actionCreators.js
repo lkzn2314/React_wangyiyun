@@ -2,16 +2,49 @@ import * as actionTypes from './constants';
 
 import { getSongDetail } from '@/network/player';
 
-const changeCurrentSongAction = res => ({
+const changeCurrentSongAction = song => ({
     type: actionTypes.CHANGE_CURRENT_SONG,
-    currentSong: res.songs[0]
-})
+    currentSong: song
+});
+
+const changeCurrentSongIndexAction = index => ({
+    type: actionTypes.CHANGE_CURRENT_SONG_INDEX,
+    currentSongIndex: index
+});
+
+const changePlayListAction = playList => ({
+    type: actionTypes.CHANGE_PLAY_LIST,
+    playList
+});
 
 export const getCurrentSongAction = (ids) => {
-    return dispatch => {
-        getSongDetail(ids).then(res => {
-            console.log(res);
-            dispatch(changeCurrentSongAction(res))
-        })
+    return (dispatch, getState) => {
+        // i.先在列表查找该歌曲是否已有
+        const playList = getState().getIn(['player', 'playList']);
+        const songIndex = playList.findIndex(song => song.id === ids);
+        //2.判断逻辑
+        if (songIndex === -1) { //未找到
+            getSongDetail(ids).then(res => {
+                const song = res.songs && res.songs[0];
+                if (!song) return;
+                console.log(res);
+                //将新歌曲加入播放列表
+                const newPlayList = [...playList];
+                newPlayList.push(song);
+                //更新redux中的值
+                dispatch(changePlayListAction(newPlayList));
+                dispatch(changeCurrentSongIndexAction(newPlayList.length - 1));
+                dispatch(changeCurrentSongAction(song))
+            })
+        } else {
+            const song = playList[songIndex];
+            dispatch(changeCurrentSongIndexAction(songIndex));
+            dispatch(changeCurrentSongAction(song));
+        }
     }
 }
+
+export const changeSequenceAction = (sequence) => ({
+    type: actionTypes.CHANGE_SEQUENCE,
+    sequence
+})

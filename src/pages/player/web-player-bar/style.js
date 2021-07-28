@@ -205,7 +205,7 @@ export const Operator = styled.div`
     .playlist {
       padding-left: 18px;
       text-align: center;
-      color: #ccc;
+      color: #666;
       width: 59px;
       background-position: -42px -68px;
     }

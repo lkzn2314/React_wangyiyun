@@ -2,7 +2,10 @@ import React, { memo, useState, useEffect, useRef, useCallback } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Slider } from 'antd';
 
-import { getCurrentSongAction } from '../store/actionCreators';
+import {
+  getCurrentSongAction,
+  changeSequenceAction
+} from '../store/actionCreators';
 
 import {
   formatImgSize,
@@ -21,24 +24,36 @@ export default memo(function WebPlayerBar() {
   const [currentTime, setCurrentTime] = useState(0);
   const [progress, setProgress] = useState(0);
   const [isChanging, setIsChanging] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const dispatch = useDispatch();
-  const { currentSong } = useSelector(state => ({
-    currentSong: state.getIn(['player', 'currentSong'])
-  }), shallowEqual)
+  const { currentSong, playList, sequence } = useSelector(state => ({
+    currentSong: state.getIn(['player', 'currentSong']),
+    playList: state.getIn(['player', 'playList']),
+    sequence: state.getIn(['player', 'sequence'])
+  }), shallowEqual);
 
   const audioRef = useRef();
   useEffect(() => {
-    dispatch(getCurrentSongAction(1861640530))
-  }, [dispatch])
+    dispatch(getCurrentSongAction(5162502))
+  }, [dispatch]);
+
+  useEffect(() => {
+    audioRef.current.src = getSongPlay(currentSong.id);
+  }, [currentSong]);
+
 
   const picUrl = currentSong.al && currentSong.al.picUrl;
   const singer = (currentSong.ar && currentSong.ar[0].name) || '未知歌手';
   const allTime = currentSong.dt || 0;
 
   const playMusic = () => {
-    audioRef.current.src = getSongPlay(currentSong.id);
-    audioRef.current.play();
+    isPlaying ? audioRef.current.pause() : audioRef.current.play();
+    setIsPlaying(!isPlaying);
+  }
+
+  const changeMusic = tag => {
+
   }
 
   const timeUpdate = (e) => {
@@ -59,13 +74,21 @@ export default memo(function WebPlayerBar() {
     setIsChanging(false);
   }, [allTime])
 
+  const changeSequence = () => {
+    let currentSequence = sequence + 1;
+    if (currentSequence > 2) {
+      currentSequence = 0;
+    }
+    dispatch(changeSequenceAction(currentSequence));
+  }
+
   return (
     <WebPlayerBarWrapper className="playbar_sprite">
       <div className="content wrap-v2">
-        <Control>
-          <div className="prev playbar_sprite" />
+        <Control isPlaying={isPlaying}>
+          <div className="prev playbar_sprite" onClick={e => changeMusic(-1)} />
           <div className="play playbar_sprite" onClick={e => playMusic()} />
-          <div className="next playbar_sprite" />
+          <div className="next playbar_sprite" onClick={e => changeMusic(1)} />
         </Control>
 
         <PlayInfo>
@@ -92,7 +115,7 @@ export default memo(function WebPlayerBar() {
           </div>
         </PlayInfo>
 
-        <Operator>
+        <Operator sequence={sequence}>
           <div className="left">
             <button className="btn lyric playbar_new"></button>
             <button className="btn favor playbar_sprite"></button>
@@ -100,12 +123,12 @@ export default memo(function WebPlayerBar() {
           </div>
           <div className="right" >
             <button className="btn volume playbar_sprite"></button>
-            <button className="btn loop playbar_sprite"></button>
-            <button className="btn playlist playbar_sprite"></button>
+            <button className="btn loop playbar_sprite" onClick={() => changeSequence()}></button>
+            <button className="btn playlist playbar_sprite">{playList.length}</button>
           </div>
         </Operator>
       </div>
-      <audio ref={audioRef} onTimeUpdate={e => timeUpdate(e)} />
+      <audio ref={audioRef} onTimeUpdate={e => timeUpdate(e)} autoPlay />
     </WebPlayerBarWrapper>
   )
 })
