@@ -8,6 +8,7 @@ export const WebPlayerBarWrapper = styled.div`
     height: 52px;
     background-position: 0 0;
     background-repeat: repeat;
+    z-index: 999;
 
     .content {
         display: flex;
@@ -35,6 +36,7 @@ export const Control = styled.div`
     background-position: 0 -130px;
 
     &:hover {
+      cursor: pointer;
       background-position-x: -30px;
     }
   }
@@ -43,6 +45,7 @@ export const Control = styled.div`
     background-position: -80px -130px;
 
     &:hover {
+      cursor: pointer;
       background-position-x: -110px;
     }
   }
@@ -52,6 +55,10 @@ export const Control = styled.div`
     height: 36px;
     margin: 0 8px;
     background-position: 0 ${props => props.isPlaying ? "-165px" : "-204px"};
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 `
 
@@ -113,16 +120,19 @@ export const PlayInfo = styled.div`
         margin-right: 10px;
 
         .ant-slider-rail {
+          cursor: default;
           height: 9px;
           background: url(${require("@/assets/img/progress_bar.png")}) 0 0;
         }
 
         .ant-slider-track {
+          cursor: default;
           height: 9px;
           background: url(${require("@/assets/img/progress_bar.png")}) 0 -66px;
         }
 
         .ant-slider-handle {
+          cursor: default;
           width: 22px;
           height: 24px;
           border: none;
@@ -152,6 +162,10 @@ export const Operator = styled.div`
   .btn {
     width: 25px;
     height: 25px;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
   
   .lyric {

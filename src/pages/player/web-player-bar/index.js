@@ -2,9 +2,12 @@ import React, { memo, useState, useEffect, useRef, useCallback } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Slider } from 'antd';
 
+// import ToolTip from '@/components/tool-tip';
+
 import {
   getCurrentSongAction,
-  changeSequenceAction
+  changeSequenceAction,
+  changeMusicAction
 } from '../store/actionCreators';
 
 import {
@@ -40,6 +43,11 @@ export default memo(function WebPlayerBar() {
 
   useEffect(() => {
     audioRef.current.src = getSongPlay(currentSong.id);
+    audioRef.current.play().then(res => {
+      setIsPlaying(true)
+    }, err => {
+      setIsPlaying(false)
+    });
   }, [currentSong]);
 
 
@@ -53,13 +61,21 @@ export default memo(function WebPlayerBar() {
   }
 
   const changeMusic = tag => {
-
+    dispatch(changeMusicAction(tag));
   }
 
   const timeUpdate = (e) => {
     if (!isChanging) {
       setCurrentTime(e.target.currentTime * 1000);
       setProgress((currentTime / allTime) * 100);
+    }
+  }
+  const handleMusicEnd = () => {
+    if (sequence === 2) { // 单曲循环
+      audioRef.current.currentTime = 0;
+      audioRef.current.play();
+    } else {
+      dispatch(changeMusicAction(1));
     }
   }
 
@@ -103,8 +119,7 @@ export default memo(function WebPlayerBar() {
               <a href="#/"> </a>
             </div>
             <div className="progress">
-              <Slider tooltipVisible={false} value={progress}
-                onChange={value => sliderChange(value)}
+              <Slider tooltipVisible={false} value={progress} onChange={value => sliderChange(value)}
                 onAfterChange={value => sliderAfterChange(value)} />
               <span className="time">
                 <span className="now-time">{formatDate(Math.floor(currentTime), 'mm:ss')}</span>
@@ -122,13 +137,15 @@ export default memo(function WebPlayerBar() {
             <button className="btn share playbar_sprite"></button>
           </div>
           <div className="right" >
-            <button className="btn volume playbar_sprite"></button>
-            <button className="btn loop playbar_sprite" onClick={() => changeSequence()}></button>
+            <button className="btn volume playbar_sprite" />
+            <button className="btn loop playbar_sprite" onClick={() => changeSequence()} />
             <button className="btn playlist playbar_sprite">{playList.length}</button>
+            {/* <ToolTip title="播放列表" pNode=".playlist"
+              content={<button className="btn playlist playbar_sprite">{playList.length}</button>} /> */}
           </div>
         </Operator>
       </div>
-      <audio ref={audioRef} onTimeUpdate={e => timeUpdate(e)} autoPlay />
+      <audio ref={audioRef} onTimeUpdate={e => timeUpdate(e)} onEnded={e => handleMusicEnd()} />
     </WebPlayerBarWrapper>
   )
 })

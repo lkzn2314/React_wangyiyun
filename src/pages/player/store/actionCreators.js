@@ -48,3 +48,28 @@ export const changeSequenceAction = (sequence) => ({
     type: actionTypes.CHANGE_SEQUENCE,
     sequence
 })
+
+export const changeMusicAction = tag => {
+    return (dispatch, getState) => {
+        const sequence = getState().getIn(['player', 'sequence']);
+        let currentSongIndex = getState().getIn(['player', 'currentSongIndex']);
+        const playList = getState().getIn(['player', 'playList']);
+
+        switch (sequence) {
+            case 1:
+                let randomIndex = Math.floor(Math.random() * playList.length);
+                while (randomIndex === currentSongIndex) {
+                    randomIndex = Math.floor(Math.random() * playList.length);
+                }
+                currentSongIndex = randomIndex;
+                break;
+            default:
+                currentSongIndex += tag;
+                if (currentSongIndex >= playList.length) currentSongIndex = 0;
+                if (currentSongIndex < 0) currentSongIndex = playList.length - 1;
+        }
+        const currentSong = playList[currentSongIndex];
+        dispatch(changeCurrentSongAction(currentSong));
+        dispatch(changeCurrentSongIndexAction(currentSongIndex));
+    }
+}
