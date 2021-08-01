@@ -30,7 +30,7 @@ export default memo(function Top0Banners() {
     const beforeBannerChange = useCallback((from, to) => {
         setCurrentIndex(to)
     }, []);
-    const bgImage = banners[currentIndex] && banners[currentIndex].imageUrl + '?imageView&blur=40x20';
+    const bgImage = banners && banners[currentIndex] && banners[currentIndex].imageUrl + '?imageView&blur=40x20';
 
     return (
         <BannerWrapper bgImage={bgImage}>
@@ -39,7 +39,7 @@ export default memo(function Top0Banners() {
                     <Carousel effect="fade" ref={bannerRef}
                         autoplay beforeChange={beforeBannerChange} >
                         {
-                            banners.map(item => {
+                            banners?.map(item => {
                                 return (
                                     <div key={item.imageUrl} className="banner-item">
                                         <img className="image" src={item.imageUrl} alt={item.typeTitle} />

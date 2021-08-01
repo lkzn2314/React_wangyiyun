@@ -26,7 +26,7 @@ export default memo(function HotRecommend() {
       <ThemeHeaderRec title="热门推荐" tabs={["华语", "流行", "摇滚", "民谣", "电子"]} />
       <div className="recommend-list">
         {
-          hotRecommends.map(item => {
+          hotRecommends?.map(item => {
             return (
               <SongsCover key={item.id} info={item} />
             )

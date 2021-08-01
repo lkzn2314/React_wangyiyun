@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { lazy } from 'react';
 import { Redirect } from 'react-router-dom';
 
-import LKDiscover from '@/pages/discover';
-import Recommend from '@/pages/discover/c-pages/recommend';
+const LKDiscover = lazy(_ => import('@/pages/discover'));
+const Recommend = lazy(_ => import('@/pages/discover/c-pages/recommend'));
 
 export default [
   {

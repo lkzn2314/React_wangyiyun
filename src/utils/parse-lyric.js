@@ -18,6 +18,7 @@ export function parseLyric(lyricString) {
     for (let k of lyricArray) {
         if (k) {
             const parseTime = parseEXP.exec(k);
+            if (!parseTime) continue;
             //全部时间转为毫秒数
             const time1 = parseTime[1] * 60 * 1000;
             const time2 = parseTime[2] * 1000;
