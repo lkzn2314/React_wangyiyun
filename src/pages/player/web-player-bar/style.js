@@ -5,6 +5,7 @@ export const WebPlayerBarWrapper = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
+    // bottom: -46px;
     height: 52px;
     background-position: 0 0;
     background-repeat: repeat;
@@ -19,6 +20,27 @@ export const WebPlayerBarWrapper = styled.div`
         bottom: 0;
         height: 47px;
         transform: translateX(-50%);
+    }
+
+    .lockbg {
+      position: absolute;
+      right: 20px;
+      bottom: 46px;
+      width: 65px;
+      height: 20px;
+      background-position: 0 -380px;
+
+      .lock {
+        display: block;
+        width: 18px;
+        height: 18px;
+        margin: 5px 0 0 16px;
+        background-position: -80px -380px;
+
+        &:hover {
+          background-position-y: -400px;
+        }
+      }
     }
 `
 

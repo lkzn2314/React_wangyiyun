@@ -37,7 +37,7 @@ export default memo(function NewDisc() {
                 return (
                   <div className="disc-list" key={index}>
                     {
-                      newDiscs.slice(index * 5, (index + 1) * 5).map(item => {
+                      newDiscs?.slice(index * 5, (index + 1) * 5).map(item => {
                         return (<DiscsCover key={item.id} info={item} />)
                       })
                     }

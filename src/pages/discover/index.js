@@ -5,7 +5,8 @@ import { renderRoutes } from 'react-router-config';
 import { dicoverMenu } from '@/network/local-data';
 import {
   DiscoverWrapper,
-  TopMenu
+  TopMenu,
+  BackTopStyle
 } from './style';
 
 export default memo(function LKDiscover(props) {
@@ -29,6 +30,9 @@ export default memo(function LKDiscover(props) {
         </div>
       </DiscoverWrapper>
       {renderRoutes(route.routes)}
+      <BackTopStyle duration={0} visibilityHeight={100} >
+        <div className="back-top sprite_top" />
+      </BackTopStyle>
     </>
   )
 })

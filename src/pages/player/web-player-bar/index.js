@@ -1,13 +1,14 @@
 import React, { memo, useState, useEffect, useRef, useCallback } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { Slider } from 'antd';
+import { Slider, message } from 'antd';
 
 // import ToolTip from '@/components/tool-tip';
 
 import {
   getCurrentSongAction,
   changeSequenceAction,
-  changeMusicAction
+  changeMusicAction,
+  changeLyricItemIndexAction
 } from '../store/actionCreators';
 
 import {
@@ -30,15 +31,17 @@ export default memo(function WebPlayerBar() {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const dispatch = useDispatch();
-  const { currentSong, playList, sequence } = useSelector(state => ({
+  const { currentSong, playList, sequence, lyric, lyricItemIndex } = useSelector(state => ({
     currentSong: state.getIn(['player', 'currentSong']),
     playList: state.getIn(['player', 'playList']),
-    sequence: state.getIn(['player', 'sequence'])
+    sequence: state.getIn(['player', 'sequence']),
+    lyric: state.getIn(['player', 'lyric']),
+    lyricItemIndex: state.getIn(['player', 'lyricItemIndex'])
   }), shallowEqual);
 
   const audioRef = useRef();
   useEffect(() => {
-    dispatch(getCurrentSongAction(5162502))
+    dispatch(getCurrentSongAction(167876))
   }, [dispatch]);
 
   useEffect(() => {
@@ -50,26 +53,45 @@ export default memo(function WebPlayerBar() {
     });
   }, [currentSong]);
 
-
-  const picUrl = currentSong.al && currentSong.al.picUrl;
+  const picUrl = currentSong.al?.picUrl;
   const singer = (currentSong.ar && currentSong.ar[0].name) || '未知歌手';
   const allTime = currentSong.dt || 0;
 
   const playMusic = () => {
     isPlaying ? audioRef.current.pause() : audioRef.current.play();
     setIsPlaying(!isPlaying);
-  }
+  };
 
   const changeMusic = tag => {
     dispatch(changeMusicAction(tag));
-  }
+  };
 
   const timeUpdate = (e) => {
     if (!isChanging) {
       setCurrentTime(e.target.currentTime * 1000);
       setProgress((currentTime / allTime) * 100);
+    };
+
+    // 根据时间获得当前歌词
+    let currentLyricIndex = 0;
+    for (let i in lyric) {
+      let lyricItem = lyric[i];
+      if (e.target.currentTime * 1000 <= lyricItem.time) {
+        currentLyricIndex = i - 1;
+        break;
+      }
     }
-  }
+    if (lyricItemIndex !== currentLyricIndex) {
+      dispatch(changeLyricItemIndexAction(currentLyricIndex));
+      if (!lyric[currentLyricIndex]?.content) return;
+      message.open({
+        key: 'lyric',
+        duration: 0,
+        content: lyric[currentLyricIndex]?.content
+      })
+    }
+  };
+
   const handleMusicEnd = () => {
     if (sequence === 2) { // 单曲循环
       audioRef.current.currentTime = 0;
@@ -77,18 +99,18 @@ export default memo(function WebPlayerBar() {
     } else {
       dispatch(changeMusicAction(1));
     }
-  }
+  };
 
   const sliderChange = useCallback((value) => {
     setProgress(value);
     setCurrentTime(value / 100 * allTime);
     setIsChanging(true);
-  }, [allTime])
+  }, [allTime]);
 
   const sliderAfterChange = useCallback((value) => {
     audioRef.current.currentTime = value / 100 * allTime / 1000;
     setIsChanging(false);
-  }, [allTime])
+  }, [allTime]);
 
   const changeSequence = () => {
     let currentSequence = sequence + 1;
@@ -96,7 +118,7 @@ export default memo(function WebPlayerBar() {
       currentSequence = 0;
     }
     dispatch(changeSequenceAction(currentSequence));
-  }
+  };
 
   return (
     <WebPlayerBarWrapper className="playbar_sprite">
@@ -139,13 +161,17 @@ export default memo(function WebPlayerBar() {
           <div className="right" >
             <button className="btn volume playbar_sprite" />
             <button className="btn loop playbar_sprite" onClick={() => changeSequence()} />
-            <button className="btn playlist playbar_sprite">{playList.length}</button>
+            <button className="btn playlist playbar_sprite">{playList?.length}</button>
             {/* <ToolTip title="播放列表" pNode=".playlist"
               content={<button className="btn playlist playbar_sprite">{playList.length}</button>} /> */}
           </div>
         </Operator>
       </div>
-      <audio ref={audioRef} onTimeUpdate={e => timeUpdate(e)} onEnded={e => handleMusicEnd()} />
+
+      <audio ref={audioRef} onTimeUpdate={e => timeUpdate(e)}
+        onEnded={e => handleMusicEnd()} />
+
+      <i className="lockbg playbar_sprite" ><i className="lock playbar_sprite" /></i>
     </WebPlayerBarWrapper>
   )
 })

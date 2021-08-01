@@ -64,7 +64,7 @@ const changeOriginRankingAction = res => ({
 export const getRankingAction = (idx) => {
   return dispatch => {
     getRankings(idx).then(res => {
-      console.log(res);
+      // console.log(res);
       switch (idx) {
         case 0:
           dispatch(changeNewRankingAction(res));

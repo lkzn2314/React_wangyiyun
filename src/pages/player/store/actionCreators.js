@@ -1,6 +1,12 @@
 import * as actionTypes from './constants';
 
-import { getSongDetail } from '@/network/player';
+import {
+    getSongDetail,
+    getLyric,
+    getPlaylistDetail
+} from '@/network/player';
+
+import { parseLyric } from '@/utils/parse-lyric';
 
 const changeCurrentSongAction = song => ({
     type: actionTypes.CHANGE_CURRENT_SONG,
@@ -17,37 +23,10 @@ const changePlayListAction = playList => ({
     playList
 });
 
-export const getCurrentSongAction = (ids) => {
-    return (dispatch, getState) => {
-        // i.先在列表查找该歌曲是否已有
-        const playList = getState().getIn(['player', 'playList']);
-        const songIndex = playList.findIndex(song => song.id === ids);
-        //2.判断逻辑
-        if (songIndex === -1) { //未找到
-            getSongDetail(ids).then(res => {
-                const song = res.songs && res.songs[0];
-                if (!song) return;
-                console.log(res);
-                //将新歌曲加入播放列表
-                const newPlayList = [...playList];
-                newPlayList.push(song);
-                //更新redux中的值
-                dispatch(changePlayListAction(newPlayList));
-                dispatch(changeCurrentSongIndexAction(newPlayList.length - 1));
-                dispatch(changeCurrentSongAction(song))
-            })
-        } else {
-            const song = playList[songIndex];
-            dispatch(changeCurrentSongIndexAction(songIndex));
-            dispatch(changeCurrentSongAction(song));
-        }
-    }
-}
-
-export const changeSequenceAction = (sequence) => ({
+export const changeSequenceAction = sequence => ({
     type: actionTypes.CHANGE_SEQUENCE,
     sequence
-})
+});
 
 export const changeMusicAction = tag => {
     return (dispatch, getState) => {
@@ -71,5 +50,74 @@ export const changeMusicAction = tag => {
         const currentSong = playList[currentSongIndex];
         dispatch(changeCurrentSongAction(currentSong));
         dispatch(changeCurrentSongIndexAction(currentSongIndex));
+
+        dispatch(getLyricAction(currentSong.id))
+    }
+};
+
+const changeLyricAction = lyric => ({
+    type: actionTypes.CHANGE_LYRIC,
+    lyric
+});
+
+// 改变当前歌词行 索引
+export const changeLyricItemIndexAction = index => ({
+    type: actionTypes.CHANGE_LYRIC_ITEM_INDEX,
+    lyricItemIndex: index
+})
+
+// 获取歌词
+const getLyricAction = id => {
+    return dispatch => {
+        getLyric(id).then(res => {
+            const lyric = parseLyric(res.lrc?.lyric);
+            dispatch(changeLyricAction(lyric));
+            console.log(lyric);
+        })
+    }
+};
+
+export const getCurrentSongAction = (ids) => {
+    return (dispatch, getState) => {
+        // i.先在列表查找该歌曲是否已有
+        const playList = getState().getIn(['player', 'playList']);
+        const songIndex = playList.findIndex(song => song.id === ids);
+        let song = null;
+        //2.判断逻辑
+        if (songIndex === -1) { //未找到
+            getSongDetail(ids).then(res => {
+                song = res.songs && res.songs[0];
+                if (!song) return;
+                // console.log(res);
+                //将新歌曲加入播放列表
+                const newPlayList = [...playList];
+                newPlayList.push(song);
+                //更新redux中的值
+                dispatch(changePlayListAction(newPlayList));
+                dispatch(changeCurrentSongIndexAction(newPlayList.length - 1));
+                dispatch(changeCurrentSongAction(song))
+            })
+        } else {
+            song = playList[songIndex];
+            dispatch(changeCurrentSongIndexAction(songIndex));
+            dispatch(changeCurrentSongAction(song));
+        }
+
+        //3、请求歌曲歌词
+        dispatch(getLyricAction(ids))
+    }
+};
+
+// 获取歌单列表
+export const getPlaylistDetailAction = id => {
+    return dispatch => {
+        getPlaylistDetail(id).then(res => {
+            const newPlayList = res?.playlist?.tracks;
+            dispatch(changePlayListAction(newPlayList));
+            dispatch(changeCurrentSongAction(newPlayList[0]));
+            dispatch(changeCurrentSongIndexAction(0));
+            dispatch(getLyricAction(newPlayList[0]?.id));
+        })
     }
 }
+
