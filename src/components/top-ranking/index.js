@@ -11,9 +11,9 @@ export default memo(function TopRanking(props) {
 
   const dispatch = useDispatch();
 
-  const playMusic = item => {
-    console.log(item.id);
-    dispatch(getCurrentSongAction(item.id));
+  const playMusic = songId => {
+    // console.log(songId);
+    dispatch(getCurrentSongAction(songId));
   }
 
   return (
@@ -41,7 +41,7 @@ export default memo(function TopRanking(props) {
                 <div className="info">
                   <span className="name text-nowrap">{item.name}</span>
                   <div className="operate">
-                    <button className="btn sprite_02 play" onClick={() => { playMusic(item) }} />
+                    <button className="btn sprite_02 play" onClick={() => playMusic(item.id)} />
                     <button className="btn sprite_icon2 addto" />
                     <button className="btn sprite_02 favor" />
                   </div>

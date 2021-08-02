@@ -1,8 +1,6 @@
 import React, { memo, useState, useEffect, useRef, useCallback } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { Slider, message } from 'antd';
-
-// import ToolTip from '@/components/tool-tip';
+import { Slider, message, Tooltip } from 'antd';
 
 import {
   getCurrentSongAction,
@@ -29,6 +27,8 @@ export default memo(function WebPlayerBar() {
   const [progress, setProgress] = useState(0);
   const [isChanging, setIsChanging] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [loopTitle, setLoopTitle] = useState('循环');
+  const [isLyricShow, setIsLyricShow] = useState(false);
 
   const dispatch = useDispatch();
   const { currentSong, playList, sequence, lyric, lyricItemIndex } = useSelector(state => ({
@@ -87,7 +87,8 @@ export default memo(function WebPlayerBar() {
       message.open({
         key: 'lyric',
         duration: 0,
-        content: lyric[currentLyricIndex]?.content
+        content: lyric[currentLyricIndex]?.content,
+        style: { display: isLyricShow ? 'block' : 'none' }
       })
     }
   };
@@ -117,7 +118,17 @@ export default memo(function WebPlayerBar() {
     if (currentSequence > 2) {
       currentSequence = 0;
     }
+    if (currentSequence === 0) setLoopTitle('循环');
+    if (currentSequence === 1) setLoopTitle('随机');
+    if (currentSequence === 2) setLoopTitle('单曲循环');
     dispatch(changeSequenceAction(currentSequence));
+  };
+
+  const changeLyricShow = () => {
+    setIsLyricShow(!isLyricShow);
+    if (isLyricShow) {
+      message.destroy('lyric');
+    }
   };
 
   return (
@@ -154,16 +165,20 @@ export default memo(function WebPlayerBar() {
 
         <Operator sequence={sequence}>
           <div className="left">
-            <button className="btn lyric playbar_new"></button>
+            <Tooltip title="歌词" color='#191919'>
+              <button className="btn lyric playbar_new" onClick={() => changeLyricShow()} />
+            </Tooltip>
             <button className="btn favor playbar_sprite"></button>
             <button className="btn share playbar_sprite"></button>
           </div>
           <div className="right" >
             <button className="btn volume playbar_sprite" />
-            <button className="btn loop playbar_sprite" onClick={() => changeSequence()} />
-            <button className="btn playlist playbar_sprite">{playList?.length}</button>
-            {/* <ToolTip title="播放列表" pNode=".playlist"
-              content={<button className="btn playlist playbar_sprite">{playList.length}</button>} /> */}
+            <Tooltip title={loopTitle} color='#191919' mouseLeaveDelay={1}>
+              <button className="btn loop playbar_sprite" onClick={() => changeSequence()} />
+            </Tooltip>
+            <Tooltip title="播放列表" color='#191919' mouseEnterDelay={0.5}>
+              <button className="btn playlist playbar_sprite">{playList?.length}</button>
+            </Tooltip>
           </div>
         </Operator>
       </div>
@@ -172,6 +187,6 @@ export default memo(function WebPlayerBar() {
         onEnded={e => handleMusicEnd()} />
 
       <i className="lockbg playbar_sprite" ><i className="lock playbar_sprite" /></i>
-    </WebPlayerBarWrapper>
+    </WebPlayerBarWrapper >
   )
 })

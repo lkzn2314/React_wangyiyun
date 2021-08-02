@@ -17,7 +17,7 @@ export default memo(function SongsCover(props) {
     }, [])
 
     const playMusic = playlistId => {
-        console.log(playlistId);
+        // console.log(playlistId);
         dispatch(getPlaylistDetailAction(playlistId));
     }
 
