@@ -3,7 +3,8 @@ import * as actionTypes from './constants';
 import {
     getSongDetail,
     getLyric,
-    getPlaylistDetail
+    getPlaylistDetail,
+    getDiscDetail
 } from '@/network/player';
 
 import { parseLyric } from '@/utils/parse-lyric';
@@ -113,6 +114,21 @@ export const getPlaylistDetailAction = id => {
     return dispatch => {
         getPlaylistDetail(id).then(res => {
             const newPlayList = res?.playlist?.tracks;
+            dispatch(changePlayListAction(newPlayList));
+            dispatch(changeCurrentSongAction(newPlayList[0]));
+            dispatch(changeCurrentSongIndexAction(0));
+            dispatch(getLyricAction(newPlayList[0]?.id));
+        })
+    }
+}
+
+// 获取新碟详情
+export const getDiscDetailAction = id => {
+    return dispatch => {
+        getDiscDetail(id).then(res => {
+            const newPlayList = res?.songs;
+            console.log(newPlayList);
+            if (!newPlayList) return;
             dispatch(changePlayListAction(newPlayList));
             dispatch(changeCurrentSongAction(newPlayList[0]));
             dispatch(changeCurrentSongIndexAction(0));

@@ -58,7 +58,9 @@ export default memo(function WebPlayerBar() {
   const allTime = currentSong.dt || 0;
 
   const playMusic = () => {
-    isPlaying ? audioRef.current.pause() : audioRef.current.play();
+    isPlaying ? audioRef.current.pause() : audioRef.current.play().then(res => { }, err => {
+      message.info({ key: 'lyric', content: '对不起，该歌曲没有版权' })
+    });
     setIsPlaying(!isPlaying);
   };
 
@@ -83,7 +85,7 @@ export default memo(function WebPlayerBar() {
     }
     if (lyricItemIndex !== currentLyricIndex) {
       dispatch(changeLyricItemIndexAction(currentLyricIndex));
-      if (!lyric[currentLyricIndex]?.content) return;
+      if (!lyric || !lyric[currentLyricIndex]?.content) return;
       message.open({
         key: 'lyric',
         duration: 0,
@@ -173,7 +175,7 @@ export default memo(function WebPlayerBar() {
           </div>
           <div className="right" >
             <button className="btn volume playbar_sprite" />
-            <Tooltip title={loopTitle} color='#191919' mouseLeaveDelay={1}>
+            <Tooltip title={loopTitle} color='#191919' mouseLeaveDelay={0}>
               <button className="btn loop playbar_sprite" onClick={() => changeSequence()} />
             </Tooltip>
             <Tooltip title="播放列表" color='#191919' mouseEnterDelay={0.5}>

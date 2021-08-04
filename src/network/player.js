@@ -26,3 +26,12 @@ export function getPlaylistDetail(id) {
         }
     })
 }
+
+export function getDiscDetail(id) {
+    return request({
+        url: '/album',
+        params: {
+            id
+        }
+    })
+}

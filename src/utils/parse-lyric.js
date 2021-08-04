@@ -16,6 +16,7 @@ export function parseLyric(lyricString) {
     const lyricArray = lyricString?.split('\n');
     // console.log(lyricArray);
     let lyricList = [];
+    if (!lyricArray) return;
     for (let k of lyricArray) {
         if (k) {
             const parseTime = parseEXP.exec(k);

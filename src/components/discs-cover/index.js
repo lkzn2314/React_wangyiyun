@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-// import { getCurrentSongAction } from '@/pages/player/store/actionCreators';
+import { getDiscDetailAction } from '@/pages/player/store/actionCreators';
 
 import { formatImgSize } from '@/utils/format';
 
@@ -10,18 +10,18 @@ import { DiscsCoverWrapper } from './style';
 export default memo(function DiscsCover(props) {
     const { info } = props;
 
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-    const playMusic = songId => {
-        console.log(songId);
-        // dispatch(getCurrentSongAction());
+    const playMusic = discId => {
+        console.log(discId);
+        dispatch(getDiscDetailAction(discId));
     }
 
     return (
         <DiscsCoverWrapper>
             <div className="cover">
                 <img src={formatImgSize(info.picUrl, 100)} alt={info.name} />
-                <i className="play sprite_icon" onClick={e => playMusic(info)} />
+                <i className="play sprite_icon" onClick={e => playMusic(info.id)} />
                 <i className="cover2 sprite_cover" />
             </div>
             <div className="covber-bottom">
