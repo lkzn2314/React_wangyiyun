@@ -2,8 +2,10 @@ import React, { memo, useState, useEffect, useRef, useCallback } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Slider, message, Tooltip } from 'antd';
 
+import PlaylistPanel from '../web-player-panel';
+
 import {
-  getCurrentSongAction,
+  // getCurrentSongAction,
   changeSequenceAction,
   changeMusicAction,
   changeLyricItemIndexAction
@@ -32,6 +34,7 @@ export default memo(function WebPlayerBar() {
   const [isLyricShow, setIsLyricShow] = useState(false);
   const [isShowBar, setIsShowBar] = useState(false);
   const [isFixedPostion, setIsFixedPosition] = useState(false);
+  const [isShowPanel, setIsShowPanel] = useState(false);
 
   const dispatch = useDispatch();
   const { currentSong, playList, sequence, lyric, lyricItemIndex } = useSelector(state => ({
@@ -43,9 +46,9 @@ export default memo(function WebPlayerBar() {
   }), shallowEqual);
 
   const audioRef = useRef();
-  useEffect(() => {
+  /* useEffect(() => {
     dispatch(getCurrentSongAction(167876))
-  }, [dispatch]);
+  }, [dispatch]); */
 
   // 监听鼠标事件
   useEffect(() => {
@@ -153,6 +156,14 @@ export default memo(function WebPlayerBar() {
     setIsFixedPosition(!isFixedPostion);
   }
 
+  // 歌单面板事件
+  const changShowPanel = () => {
+    setIsShowPanel(!isShowPanel);
+    if (!isFixedPostion) {
+      setIsFixedPosition(true);
+    }
+  }
+
   return (
     <WebPlayerBarWrapper className={isFixedPostion ? "playbar_sprite fixed-position" : "playbar_sprite"} isShowBar={isShowBar}>
       <div className="content wrap-v2">
@@ -199,7 +210,7 @@ export default memo(function WebPlayerBar() {
               <button className="btn loop playbar_sprite" onClick={() => changeSequence()} />
             </Tooltip>
             <Tooltip title="播放列表" color='#191919' mouseEnterDelay={0.5}>
-              <button className="btn playlist playbar_sprite">{playList?.length}</button>
+              <button className="btn playlist playbar_sprite" onClick={() => changShowPanel()}>{playList?.length}</button>
             </Tooltip>
           </div>
         </Operator>
@@ -211,6 +222,8 @@ export default memo(function WebPlayerBar() {
       <LockStyle className="playbar_sprite" isFixedPostion={isFixedPostion} >
         <i className="lock playbar_sprite" onClick={() => changeLock()} />
       </LockStyle>
+
+      {isShowPanel && <PlaylistPanel />}
     </WebPlayerBarWrapper >
   )
 })

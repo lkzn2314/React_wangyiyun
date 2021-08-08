@@ -233,7 +233,7 @@ export const Operator = styled.div`
 
 export const LockStyle = styled.div`
   position: absolute;
-  right: 20px;
+  right: 0;
   bottom: 46px;
   width: 65px;
   height: 20px;
