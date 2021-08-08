@@ -19,7 +19,8 @@ import {
   WebPlayerBarWrapper,
   Control,
   PlayInfo,
-  Operator
+  Operator,
+  LockStyle
 } from './style';
 
 export default memo(function WebPlayerBar() {
@@ -29,6 +30,8 @@ export default memo(function WebPlayerBar() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [loopTitle, setLoopTitle] = useState('循环');
   const [isLyricShow, setIsLyricShow] = useState(false);
+  const [isShowBar, setIsShowBar] = useState(false);
+  const [isFixedPostion, setIsFixedPosition] = useState(false);
 
   const dispatch = useDispatch();
   const { currentSong, playList, sequence, lyric, lyricItemIndex } = useSelector(state => ({
@@ -44,6 +47,13 @@ export default memo(function WebPlayerBar() {
     dispatch(getCurrentSongAction(167876))
   }, [dispatch]);
 
+  // 监听鼠标事件
+  useEffect(() => {
+    window.addEventListener('mousemove', function (e) {
+      e.clientY > 640 ? setIsShowBar(true) : setIsShowBar(false);
+    })
+  }, [isShowBar])
+
   useEffect(() => {
     audioRef.current.src = getSongPlay(currentSong.id);
     audioRef.current.play().then(res => {
@@ -58,8 +68,13 @@ export default memo(function WebPlayerBar() {
   const allTime = currentSong.dt || 0;
 
   const playMusic = () => {
-    isPlaying ? audioRef.current.pause() : audioRef.current.play().then(res => { }, err => {
-      message.info({ key: 'lyric', content: '对不起，该歌曲没有版权' })
+    isPlaying ? audioRef.current.pause() : audioRef.current.play().then(res => {
+
+    }, err => {
+      message.info({
+        key: 'lyric',
+        content: '对不起，该歌曲没有版权'
+      })
     });
     setIsPlaying(!isPlaying);
   };
@@ -88,6 +103,7 @@ export default memo(function WebPlayerBar() {
       if (!lyric || !lyric[currentLyricIndex]?.content) return;
       message.open({
         key: 'lyric',
+        className: 'message-lyric',
         duration: 0,
         content: lyric[currentLyricIndex]?.content,
         style: { display: isLyricShow ? 'block' : 'none' }
@@ -132,9 +148,13 @@ export default memo(function WebPlayerBar() {
       message.destroy('lyric');
     }
   };
+  // 是否固定播放器
+  const changeLock = () => {
+    setIsFixedPosition(!isFixedPostion);
+  }
 
   return (
-    <WebPlayerBarWrapper className="playbar_sprite">
+    <WebPlayerBarWrapper className={isFixedPostion ? "playbar_sprite fixed-position" : "playbar_sprite"} isShowBar={isShowBar}>
       <div className="content wrap-v2">
         <Control isPlaying={isPlaying}>
           <div className="prev playbar_sprite" onClick={e => changeMusic(-1)} />
@@ -188,7 +208,9 @@ export default memo(function WebPlayerBar() {
       <audio ref={audioRef} onTimeUpdate={e => timeUpdate(e)}
         onEnded={e => handleMusicEnd()} />
 
-      <i className="lockbg playbar_sprite" ><i className="lock playbar_sprite" /></i>
+      <LockStyle className="playbar_sprite" isFixedPostion={isFixedPostion} >
+        <i className="lock playbar_sprite" onClick={() => changeLock()} />
+      </LockStyle>
     </WebPlayerBarWrapper >
   )
 })

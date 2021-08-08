@@ -1,12 +1,11 @@
+import { message } from 'antd';
 import * as actionTypes from './constants';
-
 import {
     getSongDetail,
     getLyric,
     getPlaylistDetail,
     getDiscDetail
 } from '@/network/player';
-
 import { parseLyric } from '@/utils/parse-lyric';
 
 const changeCurrentSongAction = song => ({
@@ -29,6 +28,7 @@ export const changeSequenceAction = sequence => ({
     sequence
 });
 
+// 切换歌曲
 export const changeMusicAction = tag => {
     return (dispatch, getState) => {
         const sequence = getState().getIn(['player', 'sequence']);
@@ -72,8 +72,16 @@ const getLyricAction = id => {
     return dispatch => {
         getLyric(id).then(res => {
             const lyric = parseLyric(res.lrc?.lyric);
-            dispatch(changeLyricAction(lyric));
             console.log(lyric);
+            if (!lyric) {
+                message.info({
+                    key: 'lyric',
+                    className: 'message-lyric',
+                    content: '纯音乐，请欣赏',
+                    duration: 0
+                })
+            }
+            dispatch(changeLyricAction(lyric));
         })
     }
 };
@@ -109,11 +117,17 @@ export const getCurrentSongAction = (ids) => {
     }
 };
 
-// 获取歌单列表
+// 获取歌单列表(热门推荐)
 export const getPlaylistDetailAction = id => {
     return dispatch => {
         getPlaylistDetail(id).then(res => {
             const newPlayList = res?.playlist?.tracks;
+            if (!newPlayList) {
+                message.error({
+                    content: '获取歌单列表失败！'
+                })
+                return;
+            }
             dispatch(changePlayListAction(newPlayList));
             dispatch(changeCurrentSongAction(newPlayList[0]));
             dispatch(changeCurrentSongIndexAction(0));
@@ -128,7 +142,12 @@ export const getDiscDetailAction = id => {
         getDiscDetail(id).then(res => {
             const newPlayList = res?.songs;
             console.log(newPlayList);
-            if (!newPlayList) return;
+            if (!newPlayList) {
+                message.error({
+                    content: '获取新碟详情失败！'
+                })
+                return;
+            }
             dispatch(changePlayListAction(newPlayList));
             dispatch(changeCurrentSongAction(newPlayList[0]));
             dispatch(changeCurrentSongIndexAction(0));

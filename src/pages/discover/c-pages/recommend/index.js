@@ -4,6 +4,8 @@ import TopBanners from './c-comps/top-banner';
 import HotRecommend from './c-comps/hot-recommend';
 import NewDisc from './c-comps/new-disc';
 import Ranking from './c-comps/ranking';
+import Login from './c-comps/login';
+import ArtistAndAnchor from './c-comps/artist-anchor';
 
 import {
   RecommendWraper,
@@ -24,7 +26,10 @@ export default memo(function Recommend() {
           <Ranking />
         </RecommendLeft>
 
-        <RecommendRight></RecommendRight>
+        <RecommendRight>
+          <Login />
+          <ArtistAndAnchor />
+        </RecommendRight>
       </Content>
     </RecommendWraper>
   )

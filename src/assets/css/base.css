@@ -118,7 +118,15 @@ body, textarea, select, input, button {
 }
 
 /* 歌词提示框 */
-.ant-message .ant-message-notice-content {
+/* .ant-message .ant-message-notice-content {
+  position: fixed;
+  left: 50%;
+  bottom: 60px;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, .5);
+  color: #fff;
+} */
+.message-lyric .ant-message-notice-content {
   position: fixed;
   left: 50%;
   bottom: 60px;
