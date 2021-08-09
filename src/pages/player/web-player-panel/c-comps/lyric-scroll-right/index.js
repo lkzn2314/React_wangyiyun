@@ -1,7 +1,7 @@
 import React, { memo, useRef, useEffect } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 
-import { scrollTo } from "@/utils/format";
+import { scrollTo } from "@/utils/lyric-scroll";
 
 import { LyricScrollWrapper } from './style';
 
@@ -14,7 +14,7 @@ export default memo(function LyricScrollPanel() {
 
   const panelRef = useRef();
   useEffect(() => {
-    if (lyricItemIndex > 0 && lyricItemIndex < 3) return;
+    if (lyricItemIndex >= 0 && lyricItemIndex < 3) return;
     scrollTo(panelRef.current, (lyricItemIndex - 3) * 32, 300)
   }, [lyricItemIndex]);
 

@@ -30,6 +30,7 @@ export const PlayListWrapper = styled.div`
     color: #ccc;
 
     &:hover {
+      cursor: pointer;
       color: #fff;
       background-color: #000;
     }
@@ -65,6 +66,28 @@ export const PlayListWrapper = styled.div`
         height: 16px;
         margin-left: 20px;
         background-position: -100px 0;
+      }
+    }
+  }
+
+  .no-playlist {
+    width: 360px;
+    height: 90px;
+    margin: 80px auto 0;
+    color: #9a9a9a;
+    text-align: center;
+
+    .first {
+      margin-bottom: 24px;
+
+      i {
+        display: inline-block;
+        position: relative;
+        top: 5px;
+        widtH: 36px;
+        height: 29px;
+        margin-right: 5px;
+        background-position: -138px 0;
       }
     }
   }

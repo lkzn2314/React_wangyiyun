@@ -33,6 +33,15 @@ export const HeaderLeft = styled.div`
       position: relative;
       top: 4px;
       right: 2px;
+
+      &:hover {
+        background-position-y: -20px;
+      }
+    }
+
+    .text:hover {
+      color: #e2e2e2;
+      text-decoration: underline;
     }
 
     .favor {

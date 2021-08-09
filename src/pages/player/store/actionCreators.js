@@ -18,23 +18,24 @@ const changeCurrentSongIndexAction = index => ({
     currentSongIndex: index
 });
 
-const changePlayListAction = playList => ({
+export const changePlayListAction = playList => ({
     type: actionTypes.CHANGE_PLAY_LIST,
     playList
 });
 
+// 0 循环  1 随机  2 单曲
 export const changeSequenceAction = sequence => ({
     type: actionTypes.CHANGE_SEQUENCE,
     sequence
 });
 
-// 切换歌曲
+// 切换歌曲(前/后一首)
 export const changeMusicAction = tag => {
     return (dispatch, getState) => {
         const sequence = getState().getIn(['player', 'sequence']);
         let currentSongIndex = getState().getIn(['player', 'currentSongIndex']);
         const playList = getState().getIn(['player', 'playList']);
-
+        if (!playList.length) return;
         switch (sequence) {
             case 1:
                 let randomIndex = Math.floor(Math.random() * playList.length);
@@ -61,7 +62,7 @@ const changeLyricAction = lyric => ({
     lyric
 });
 
-// 改变当前歌词行 索引
+// 改变当前行歌词
 export const changeLyricItemIndexAction = index => ({
     type: actionTypes.CHANGE_LYRIC_ITEM_INDEX,
     lyricItemIndex: index
@@ -118,9 +119,9 @@ export const getCurrentSongAction = (ids) => {
 };
 
 // 获取歌单列表(热门推荐)
-export const getPlaylistDetailAction = id => {
+export const getPlaylistDetailAction = playlistId => {
     return dispatch => {
-        getPlaylistDetail(id).then(res => {
+        getPlaylistDetail(playlistId).then(res => {
             const newPlayList = res?.playlist?.tracks;
             if (!newPlayList) {
                 message.error({
@@ -137,9 +138,9 @@ export const getPlaylistDetailAction = id => {
 }
 
 // 获取新碟详情
-export const getDiscDetailAction = id => {
+export const getDiscDetailAction = discId => {
     return dispatch => {
-        getDiscDetail(id).then(res => {
+        getDiscDetail(discId).then(res => {
             const newPlayList = res?.songs;
             console.log(newPlayList);
             if (!newPlayList) {

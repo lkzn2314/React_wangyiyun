@@ -1,5 +1,7 @@
 import React, { memo } from 'react';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
+
+import { changePlayListAction } from '@/pages/player/store/actionCreators';
 
 import {
     HeaderWrapper,
@@ -8,10 +10,16 @@ import {
 } from './style';
 
 export default memo(function PannelHeader() {
+
+    const dispatch = useDispatch();
     const { playList, currentSong } = useSelector(state => ({
         playList: state.getIn(["player", "playList"]),
         currentSong: state.getIn(["player", "currentSong"])
     }), shallowEqual);
+
+    const clearPlaylist = () => {
+        dispatch(changePlayListAction([]))
+    }
 
     return (
         <HeaderWrapper>
@@ -20,11 +28,11 @@ export default memo(function PannelHeader() {
                 <div className="operator">
                     <button>
                         <i className="playlist_sprite icon favor" />
-                        收藏全部
+                        <i className="text">收藏全部</i>
                     </button>
-                    <button>
+                    <button onClick={() => clearPlaylist()}>
                         <i className="playlist_sprite icon remove" />
-                        清除
+                        <i className="text">清除</i>
                     </button>
                 </div>
             </HeaderLeft>
