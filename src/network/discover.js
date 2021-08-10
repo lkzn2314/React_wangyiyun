@@ -27,12 +27,12 @@ export function getNewDiscs(limit) {
   })
 }
 
-// 榜单
-export function getRankings(idx) {
+// 榜单（此为新接口，与获取表单详情接口一致）
+export function getRankings(id) {
   return request({
-    url: '/top/list',
+    url: '/playlist/detail',
     params: {
-      idx
+      id
     }
   })
 }

@@ -72,11 +72,11 @@ export const dicoverMenu = [
   },
   {
     title: "排行榜",
-    link: "/discover/ranking"
+    link: "/discover/musiclist"
   },
   {
     title: "歌单",
-    link: "/discover/songs"
+    link: "/discover/playlist"
   },
   {
     title: "主播电台",
@@ -252,3 +252,5 @@ export const artistCategories = [
     ]
   },
 ]
+
+// 云音乐特色榜

@@ -61,18 +61,18 @@ const changeOriginRankingAction = res => ({
   originRankings: res.playlist
 })
 
-export const getRankingAction = (idx) => {
+export const getRankingAction = (id) => {
   return dispatch => {
-    getRankings(idx).then(res => {
+    getRankings(id).then(res => {
       // console.log(res);
-      switch (idx) {
-        case 0:
+      switch (id) {
+        case 3779629:
           dispatch(changeNewRankingAction(res));
           break;
-        case 2:
+        case 2884035:
           dispatch(changeOriginRankingAction(res));
           break;
-        case 3:
+        case 19723756:
           dispatch(changeUpRankingAction(res));
           break;
         default:

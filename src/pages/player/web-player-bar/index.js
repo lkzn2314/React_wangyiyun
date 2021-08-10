@@ -66,7 +66,7 @@ export default memo(function WebPlayerBar() {
     });
   }, [currentSong]);
 
-  const picUrl = currentSong.al?.picUrl;
+  const picUrl = currentSong.al?.picUrl || 'http://s4.music.126.net/style/web2/img/default/default_album.jpg?limit=34x34';
   const singer = (currentSong.ar && currentSong.ar[0].name) || '未知歌手';
   const allTime = currentSong.dt || 0;
 

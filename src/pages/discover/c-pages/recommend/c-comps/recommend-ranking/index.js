@@ -18,7 +18,8 @@ export default memo(function Ranking() {
   }))
 
   useEffect(() => {
-    [0, 2, 3].map(index =>
+    // 【飙升--新歌--原创】
+    [19723756, 3779629, 2884035].map(index =>
       dispatch(getRankingAction(index))
     )
   }, [dispatch])
