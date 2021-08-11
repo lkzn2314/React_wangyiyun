@@ -7,8 +7,7 @@ export const MusiclistWrapper = styled.div`
 
 export const MusiclistLeft = styled.div`
     width: 240px;
-    height: 500px;
-    background-color: pink;
+    background-color: #f9f9f9;
 
 `
 
@@ -16,5 +15,5 @@ export const MusiclistLeft = styled.div`
 export const MusiclistRight = styled.div`
     width: 740px;
     height: 500px;
-    background-color: #eee;
+    background-color: #fff;
 `

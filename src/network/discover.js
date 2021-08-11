@@ -27,7 +27,7 @@ export function getNewDiscs(limit) {
   })
 }
 
-// 榜单（此为新接口，与获取表单详情接口一致）
+// 榜单详情（此为新接口，与获取歌单详情接口一致）
 export function getRankings(id) {
   return request({
     url: '/playlist/detail',
@@ -44,5 +44,12 @@ export function getArtists(limit) {
     params: {
       limit
     }
+  })
+}
+
+// 所有榜单
+export function getToplist() {
+  return request ({
+    url: '/toplist'
   })
 }

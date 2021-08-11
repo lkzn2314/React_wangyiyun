@@ -1,5 +1,7 @@
 import React, { memo } from 'react';
 
+import MusicRankings from './c-comps/music-rankings';
+
 import {
     MusiclistWrapper,
     MusiclistLeft,
@@ -10,8 +12,7 @@ export default memo(function MusicList() {
     return (
         <MusiclistWrapper className="wrap-v2">
             <MusiclistLeft>
-                我是榜单
-
+                <MusicRankings />
             </MusiclistLeft>
 
             <MusiclistRight></MusiclistRight>
