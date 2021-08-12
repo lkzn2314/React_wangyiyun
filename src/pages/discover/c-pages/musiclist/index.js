@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 
-import MusicRankings from './c-comps/music-rankings';
+import MusicRankings from './c-comps/ranking-list';
+import RankingInfo from './c-comps/ranking-header';
 
 import {
     MusiclistWrapper,
@@ -15,7 +16,9 @@ export default memo(function MusicList() {
                 <MusicRankings />
             </MusiclistLeft>
 
-            <MusiclistRight></MusiclistRight>
+            <MusiclistRight>
+                <RankingInfo />
+            </MusiclistRight>
         </MusiclistWrapper>
     )
 })

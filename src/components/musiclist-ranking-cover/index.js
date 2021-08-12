@@ -9,19 +9,18 @@ export default memo(function MusiclistRankingCover(props) {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
-
+        
     }, [])
 
     const changeRankingClick = (index, id) => {
-        console.log(index, id);
         setCurrentIndex(index);
+        console.log(index, id);
     }
 
     return (
-        <CoverWrapper className={currentIndex === index ? "active" : ""} onClick={() => changeRankingClick(index, info?.id)}>
+        <CoverWrapper className={currentIndex === index ? "active" : " "} onClick={() => changeRankingClick(index, info.id)}>
             <img src={formatImgSize(info.coverImgUrl, 40)} alt='' />
             <div>
-                <span>{currentIndex}</span>
                 <div className="name">{info.name}</div>
                 <div className="text">{info.updateFrequency}</div>
             </div>
