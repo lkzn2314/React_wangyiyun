@@ -11,6 +11,5 @@ export const MusiclistLeft = styled.div`
 
 export const MusiclistRight = styled.div`
     width: 740px;
-    height: 500px;
     background-color: #fff;
 `

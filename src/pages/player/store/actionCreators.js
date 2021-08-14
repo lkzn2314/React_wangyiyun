@@ -118,7 +118,7 @@ export const getCurrentSongAction = (ids) => {
     }
 };
 
-// 获取歌单列表(热门推荐)
+// 获取歌单列表(如：推荐/热门推荐，排行榜各种榜单)
 export const getPlaylistDetailAction = playlistId => {
     return dispatch => {
         getPlaylistDetail(playlistId).then(res => {

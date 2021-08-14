@@ -3,25 +3,29 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import MusiclistRankingCover from '@/components/musiclist-ranking-cover';
 
-import { getToplistAction } from '../../store/actionCreators';
+import {
+    getRankingDetailAction
+} from '../../store/actionCreators';
 
 import { MusicRankingWrapper } from './style';
 
 export default memo(function MusicRankings() {
 
     const dispatch = useDispatch();
-    const { toplist } = useSelector(state => ({
-        toplist: state.getIn(['musiclist', 'toplist'])
+    const { toplist, currentIndex } = useSelector(state => ({
+        toplist: state.getIn(['musiclist', 'toplist']),
+        currentIndex: state.getIn(['musiclist', 'currentIndex'])
     }))
 
     useEffect(() => {
-        dispatch(getToplistAction())
-    }, [dispatch])
+        const id = toplist && toplist[currentIndex]?.id
+        dispatch(getRankingDetailAction(id))
+    }, [dispatch, toplist, currentIndex])
 
     return (
         <MusicRankingWrapper>
             {
-                toplist.length ?
+                toplist?.length ?
                     (<h2 className="special title">
                         云音乐特色榜
                     </h2>) : null
@@ -34,7 +38,7 @@ export default memo(function MusicRankings() {
                 })
             }
             {
-                toplist.length ?
+                toplist?.length ?
                     (<h2 className="media title">
                         全球媒体榜
                     </h2>) : null
