@@ -49,7 +49,17 @@ export function getArtists(limit) {
 
 // 所有榜单
 export function getToplist() {
-  return request ({
+  return request({
     url: '/toplist'
+  })
+}
+
+// 歌单评论
+export function getPlaylistComment(playlistId) {
+  return request({
+    url: '/comment/playlist',
+    params: {
+      id: playlistId
+    }
   })
 }

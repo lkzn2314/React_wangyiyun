@@ -4,7 +4,8 @@ import * as actionTypes from './constants';
 const initialState = Map({
     toplist: [],
     currentIndex: 0,
-    playlist: {}
+    playlist: {},
+    playlistComment: {}
 })
 
 export default function reducer(state = initialState, action) {
@@ -15,6 +16,8 @@ export default function reducer(state = initialState, action) {
             return state.set('currentIndex', action.currentIndex);
         case actionTypes.CHANGE_PLAYLIST:
             return state.set('playlist', action.playlist);
+        case actionTypes.CHANGE_PLAYLIST_COMMENT:
+            return state.set('playlistComment', action.playlistComment);
         default:
             return state;
     }

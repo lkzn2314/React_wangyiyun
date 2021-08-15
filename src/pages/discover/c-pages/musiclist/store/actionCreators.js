@@ -1,7 +1,8 @@
 import * as actionTypes from './constants';
 import {
     getToplist,
-    getRankings
+    getRankings,
+    getPlaylistComment
 } from '@/network/discover';
 
 const changeToplistAction = toplist => ({
@@ -19,6 +20,11 @@ const changeRankingDetailAction = playlist => ({
     playlist
 })
 
+const changePlaylistCommentAction = playlistComment => ({
+    type: actionTypes.CHANGE_PLAYLIST_COMMENT,
+    playlistComment
+})
+
 export const getToplistAction = () => {
     return dispatch => {
         getToplist().then(res => {
@@ -27,10 +33,19 @@ export const getToplistAction = () => {
     }
 }
 
-export const getRankingDetailAction = id => {
+export const getRankingDetailAction = playlistId => {
     return dispatch => {
-        getRankings(id).then(res => {
+        getRankings(playlistId).then(res => {
             dispatch(changeRankingDetailAction(res?.playlist?.tracks));
+        })
+    }
+}
+
+export const getPlaylistCommentAction = playlistId => {
+    return dispatch => {
+        getPlaylistComment(playlistId).then(res => {
+            console.log(res);
+            dispatch(changePlaylistCommentAction(res))
         })
     }
 }
