@@ -1,0 +1,1 @@
+export const CHANGE_ALL_PLAYLIST = 'playlist/CHANGE_ALL_PLAYLIST';

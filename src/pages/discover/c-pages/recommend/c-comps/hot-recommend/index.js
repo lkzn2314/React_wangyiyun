@@ -1,7 +1,7 @@
 import React, { memo, useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
-import ThemeHeaderRec from '@/components/theme-header-rec';
+import HeaderLine from '@/components/header-line';
 import SongsCover from '@/components/songs-cover';
 
 import { getHotRecommendsAction } from '../../store/actionCreators';
@@ -23,7 +23,7 @@ export default memo(function HotRecommend() {
 
   return (
     <HotRecommendWrapper>
-      <ThemeHeaderRec title="热门推荐" tabs={["华语", "流行", "摇滚", "民谣", "电子"]} />
+      <HeaderLine title="热门推荐" tabs={["华语", "流行", "摇滚", "民谣", "电子"]} />
       <div className="recommend-list">
         {
           hotRecommends?.map(item => {

@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 
 import { HeaderWrapper } from './style';
 
-export default memo(function ThemeHeaderRMC(props) {
+export default memo(function HeaderLine(props) {
   const { title = 'Title', tabs = [] } = props;
 
   return (

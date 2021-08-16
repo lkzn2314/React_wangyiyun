@@ -2,7 +2,7 @@ import React, { memo, useEffect, useRef } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Carousel } from 'antd';
 
-import ThemeHeaderRec from '@/components/theme-header-rec';
+import HeaderLine from '@/components/header-line';
 import DiscsCover from '@/components/discs-cover';
 
 import { getNewDiscsAction } from '../../store/actionCreators';
@@ -26,7 +26,7 @@ export default memo(function NewDisc() {
 
   return (
     <DiscWrapper>
-      <ThemeHeaderRec title="新碟上架" />
+      <HeaderLine title="新碟上架" />
       <Content>
         <i className="left arrow sprite_02" onClick={e => carouselRef.current.prev()} />
         <i className="right arrow sprite_02" onClick={e => carouselRef.current.next()} />

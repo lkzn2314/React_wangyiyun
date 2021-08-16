@@ -7,7 +7,7 @@ import { formatImgSize } from '@/utils/format';
 import { SongsCoverWrapper } from './style';
 
 export default memo(function SongsCover(props) {
-    const { info } = props;
+    const { info, infoType } = props;
 
     const dispatch = useDispatch();
 
@@ -17,14 +17,13 @@ export default memo(function SongsCover(props) {
     }, [])
 
     const playMusic = playlistId => {
-        // console.log(playlistId);
         dispatch(getPlaylistDetailAction(playlistId));
     }
 
     return (
         <SongsCoverWrapper>
             <div className="cover-top">
-                <img src={formatImgSize(info.picUrl, 140)} alt={info.name} />
+                <img src={formatImgSize(info.picUrl || info.coverImgUrl, 140)} alt={info.name} />
                 <div className="cover sprite_cover">
                     <div className="info sprite_cover">
                         <span>
@@ -35,9 +34,10 @@ export default memo(function SongsCover(props) {
                     </div>
                 </div>
             </div>
-            <div className="cover-bottom">{info.name}</div>
-            <div className="cover-source"></div>
-
+            <>
+                <div className={infoType === 'playlist' ? "cover-bottom text-nowrap" : "cover-bottom"}>{info.name}</div>
+                {infoType === 'playlist' && <div className="cover-source">by {info.creator.nickname}</div>}
+            </>
         </SongsCoverWrapper>
     )
 })

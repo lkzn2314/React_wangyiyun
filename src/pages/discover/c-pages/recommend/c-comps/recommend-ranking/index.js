@@ -1,7 +1,7 @@
 import React, { memo, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import ThemeHeaderRec from '@/components/theme-header-rec';
+import HeaderLine from '@/components/header-line';
 import TopRanking from '@/components/top-ranking';
 
 import { getRankingAction } from '../../store/actionCreators';
@@ -26,7 +26,7 @@ export default memo(function Ranking() {
 
   return (
     <RankingWrapper>
-      <ThemeHeaderRec title="榜单" />
+      <HeaderLine title="榜单" />
       <div className="ranking-list">
         <TopRanking info={upRankings} />
         <TopRanking info={newRankings} />

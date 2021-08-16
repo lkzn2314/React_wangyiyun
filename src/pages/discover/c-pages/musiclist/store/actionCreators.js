@@ -44,7 +44,6 @@ export const getRankingDetailAction = playlistId => {
 export const getPlaylistCommentAction = playlistId => {
     return dispatch => {
         getPlaylistComment(playlistId).then(res => {
-            console.log(res);
             dispatch(changePlaylistCommentAction(res))
         })
     }
