@@ -25,32 +25,38 @@ export const RankingDetailWrapper = styled.div`
     }
 `
 
-export const Body = styled.div`
-    table thead tr {
-        height: 39px;
-        color: #666;
-        text-align: left;
-        background-color: #fcfcfc;
+export const RankingDetailBody = styled.div`
+    table {
+        width: 670px;
+        table-layout: fixed;
 
-        th {
-            padding-left: 8px;
-            border-right: 2px solid #e8e8e8;
-        }
+        .thead-tr {
+            height: 39px;
+            color: #666;
+            text-align: left;
+            background-color: #fcfcfc;
 
-        .index {
-            width: 78px;
-        }
-
-        .table-title {
-            width: 327px;
-        }
-
-        .duration {
-            width: 90.5px;
-        }
-
-        .songer {
-            width: 173.5px;
+            th {
+                padding-left: 8px;
+                border-right: 2px solid #e8e8e8;
+            }
+    
+            .index {
+                width: 78px;
+            }
+    
+            .table-title {
+                width: 327px;
+                table-layout: fixed;
+            }
+    
+            .duration {
+                width: 90.5px;
+            }
+    
+            .songer {
+                width: 173.5px;
+            }
         }
     }
 

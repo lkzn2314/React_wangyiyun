@@ -7,11 +7,17 @@ const changeAllPlaylistAction = playlists => ({
     allPlaylist: playlists
 })
 
-export const getAllPlaylistAction = () => {
+const changeTotalAction = total => ({
+    type: actionTypes.CHANGE_TOTAL,
+    total
+})
+
+export const getAllPlaylistAction = (offset, limit) => {
     return dispatch => {
-        getAllPlaylist().then(res => {
+        getAllPlaylist(offset, limit).then(res => {
             console.log(res);
             dispatch(changeAllPlaylistAction(res?.playlists));
+            dispatch(changeTotalAction(res?.total))
         })
     }
 }

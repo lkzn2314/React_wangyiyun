@@ -69,8 +69,12 @@ export function getPlaylistComment(playlistId) {
 cat: tag, 比如 " 华语 "、" 古风 " 、" 欧美 "、" 流行 ", 默认为 "全部",可从歌单分类接口获取(/playlist/catlist)
 limit: 取出歌单数量 , 默认为 50
 offset: 偏移数量 , 用于分页 , 如 :( 评论页数 -1)*50, 其中 50 为 limit 的值 */
-export function getAllPlaylist() {
+export function getAllPlaylist(page = 1, limit = 50) {
   return request({
     url: '/top/playlist',
+    params: {
+      offset: (page - 1) * limit,
+      limit
+    }
   })
 }

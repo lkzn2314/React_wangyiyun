@@ -10,7 +10,7 @@ import {
 
 import {
     RankingDetailWrapper,
-    Body
+    RankingDetailBody
 } from './style';
 
 export default memo(function RankingDetail() {
@@ -41,10 +41,10 @@ export default memo(function RankingDetail() {
                             <div>播放：<i className="playcount">{toplistDetail?.playCount}</i>次</div>
                         </div>
 
-                        <Body>
+                        <RankingDetailBody>
                             <table>
                                 <thead>
-                                    <tr>
+                                    <tr className="thead-tr">
                                         <th className="index"></th>
                                         <th className="table-title">标题</th>
                                         <th className="duration">时长</th>
@@ -73,7 +73,7 @@ export default memo(function RankingDetail() {
                                     }
                                 </tbody>
                             </table>
-                        </Body>
+                        </RankingDetailBody>
                     </RankingDetailWrapper>) : null
             }
         </>

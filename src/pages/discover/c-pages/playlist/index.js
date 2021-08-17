@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo, useState, useEffect, useCallback } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import SongsCover from '@/components/songs-cover';
@@ -7,19 +7,27 @@ import { getAllPlaylistAction } from './store/actionCreators';
 
 import {
     PlaylistWrapper,
-    PlaylistBodyWrapper
+    PlaylistBodyWrapper,
+    PaginationWrapper
 } from './style';
 
 export default memo(function Playlist() {
+    const [currentPage, setCurrentPage] = useState(1);
 
     const dispatch = useDispatch();
-    const { allPlaylist } = useSelector(state => ({
-        allPlaylist: state.getIn(['playlist', 'allPlaylist'])
+    const { allPlaylist, total } = useSelector(state => ({
+        allPlaylist: state.getIn(['playlist', 'allPlaylist']),
+        total: state.getIn(['playlist', 'total'])
     }), shallowEqual)
 
     useEffect(() => {
-        dispatch(getAllPlaylistAction())
-    }, [dispatch])
+        dispatch(getAllPlaylistAction(currentPage, 35))
+    }, [dispatch, currentPage])
+
+    const pageChange = useCallback(page => {
+        console.log(page);
+        setCurrentPage(page);
+    }, [])
 
     return (
         <PlaylistWrapper className="wrap-v2">
@@ -31,21 +39,25 @@ export default memo(function Playlist() {
                 <button>热门</button>
             </div>
 
-            <PlaylistBodyWrapper>
-                <div className="all-playlist">
-                    {
-                        allPlaylist.length ?
-                            allPlaylist.map(item => {
-                                return (
-                                    <div key={item.id} className="item">
-                                        <SongsCover info={item} infoType='playlist' />
-                                    </div>
-                                )
-                            }) : null
-                    }
-                </div>
-
-            </PlaylistBodyWrapper>
+            {
+                allPlaylist?.length ?
+                    (<PlaylistBodyWrapper>
+                        <div className="all-playlist">
+                            {
+                                allPlaylist.map(item => {
+                                    return (
+                                        <div key={item.id} className="item">
+                                            <SongsCover info={item} infoType='playlist' />
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                        <PaginationWrapper current={currentPage} pageSize={35} total={total}
+                            showSizeChanger={false} showTitle={false}
+                            onChange={page => pageChange(page)} />
+                    </PlaylistBodyWrapper>) : null
+            }
         </PlaylistWrapper>
     )
 })

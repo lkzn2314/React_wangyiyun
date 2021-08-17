@@ -1,7 +1,8 @@
 import styled from 'styled-components';
+import { Pagination } from 'antd';
 
 export const PlaylistWrapper = styled.div`
-    padding: 40px;
+    padding: 40px 40px 80px 40px;
     background-color: #fff;
 
     .head {
@@ -60,6 +61,7 @@ export const PlaylistWrapper = styled.div`
 `
 
 export const PlaylistBodyWrapper = styled.div`
+    position: relative;
 
     .all-playlist {
         display: flex;
@@ -75,5 +77,25 @@ export const PlaylistBodyWrapper = styled.div`
         .item:nth-child(5n+1) {
             margin-left: 0;
         }
+    }
+`
+
+export const PaginationWrapper = styled(Pagination)`
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -50px;
+
+    .ant-pagination-item {
+        height: 22px;
+        padding: 0 8px;
+        background-color: #fff;
+        line-height: 22px;
+    }
+    
+    .ant-pagination-next .ant-pagination-item-link {
+        width: 57px;
+        height: 22px;
+        line-height: 22px;
     }
 `
