@@ -66,7 +66,7 @@ export default memo(function RankingDetail() {
                                                         {item.name}
                                                     </td>
                                                     <td>{formatDate(item.dt, 'mm:ss')}</td>
-                                                    <td>{item.ar[0].name}</td>
+                                                    <td className="text-nowrap">{item.ar[0].name}</td>
                                                 </tr>
                                             )
                                         })

@@ -26,7 +26,7 @@ export default memo(function NewDisc() {
 
   return (
     <DiscWrapper>
-      <HeaderLine title="新碟上架" />
+      <HeaderLine title="新碟上架" to="/discover/album" />
       <Content>
         <i className="left arrow sprite_02" onClick={e => carouselRef.current.prev()} />
         <i className="right arrow sprite_02" onClick={e => carouselRef.current.next()} />

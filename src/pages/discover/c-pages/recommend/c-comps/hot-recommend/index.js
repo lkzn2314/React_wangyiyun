@@ -23,7 +23,7 @@ export default memo(function HotRecommend() {
 
   return (
     <HotRecommendWrapper>
-      <HeaderLine title="热门推荐" tabs={["华语", "流行", "摇滚", "民谣", "电子"]} />
+      <HeaderLine title="热门推荐" tabs={["华语", "流行", "摇滚", "民谣", "电子"]} to='/discover/playlist' />
       <div className="recommend-list">
         {
           hotRecommends?.map(item => {

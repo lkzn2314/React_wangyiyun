@@ -17,6 +17,13 @@ export function getHotRecommends(limit) {
   })
 }
 
+// 热门歌单分类
+export function getHotPlaylistCategory() {
+  return request({
+    url: '/playlist/hot'
+  })
+}
+
 // 新碟上架
 export function getNewDiscs(limit) {
   return request({
@@ -76,5 +83,12 @@ export function getAllPlaylist(page = 1, limit = 50) {
       offset: (page - 1) * limit,
       limit
     }
+  })
+}
+
+// 所有歌单分类
+export function getAllPlaylistCategory() {
+  return request({
+    url: '/playlist/catlist'
   })
 }

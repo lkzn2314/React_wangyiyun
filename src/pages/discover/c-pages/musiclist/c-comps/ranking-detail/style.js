@@ -47,7 +47,6 @@ export const RankingDetailBody = styled.div`
     
             .table-title {
                 width: 327px;
-                table-layout: fixed;
             }
     
             .duration {

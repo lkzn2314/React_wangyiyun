@@ -85,17 +85,42 @@ export const PaginationWrapper = styled(Pagination)`
     left: 50%;
     transform: translateX(-50%);
     bottom: -50px;
+    width: 500px;
+    color: #333;
 
     .ant-pagination-item {
-        height: 22px;
-        padding: 0 8px;
+        height: 24px;
         background-color: #fff;
-        line-height: 22px;
+        line-height: 24px;
+
+        &:hover {
+            border-color: #666;
+
+            a{
+                color: #333;
+            }
+        }
     }
-    
-    .ant-pagination-next .ant-pagination-item-link {
+
+    // 左右按钮
+    .ant-pagination-item-link {
+        position: relative;
+        top: 4px;
         width: 57px;
-        height: 22px;
-        line-height: 22px;
+        height: 24px;
+        background: url(${require('@/assets/img/sprite_button2.png')}) -75px -560px;
+
+        &:hover {
+            border-color: #666;
+        }
+    }
+
+    .ant-pagination-item-active {
+        border-color: #A2161B;
+        background: url(${require('@/assets/img/sprite_button2.png')}) 0 0;
+
+        a {
+            color: #fff;
+        }
     }
 `

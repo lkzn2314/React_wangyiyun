@@ -1,6 +1,9 @@
 import * as actionTypes from './constants';
 
-import { getAllPlaylist } from '@/network/discover';
+import {
+    getAllPlaylist,
+    getAllPlaylistCategory
+} from '@/network/discover';
 
 const changeAllPlaylistAction = playlists => ({
     type: actionTypes.CHANGE_ALL_PLAYLIST,
@@ -18,6 +21,14 @@ export const getAllPlaylistAction = (offset, limit) => {
             console.log(res);
             dispatch(changeAllPlaylistAction(res?.playlists));
             dispatch(changeTotalAction(res?.total))
+        })
+    }
+}
+
+export const getAllPlaylistCategoryAction = () => {
+    return dispatch => {
+        getAllPlaylistCategory().then(res => {
+            console.log(res);
         })
     }
 }

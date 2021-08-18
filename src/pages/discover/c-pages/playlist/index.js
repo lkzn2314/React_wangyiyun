@@ -53,9 +53,10 @@ export default memo(function Playlist() {
                                 })
                             }
                         </div>
-                        <PaginationWrapper current={currentPage} pageSize={35} total={total}
+                        <PaginationWrapper className="sprite_button2" current={currentPage} pageSize={35} total={total}
                             showSizeChanger={false} showTitle={false}
                             onChange={page => pageChange(page)} />
+
                     </PlaylistBodyWrapper>) : null
             }
         </PlaylistWrapper>
