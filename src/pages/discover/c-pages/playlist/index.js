@@ -2,8 +2,12 @@ import React, { memo, useState, useEffect, useCallback } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import SongsCover from '@/components/songs-cover';
+import CategoryPanel from './c-comps/category-panel';
 
-import { getAllPlaylistAction } from './store/actionCreators';
+import {
+    getAllPlaylistAction,
+    getAllPlaylistCategoryAction
+} from './store/actionCreators';
 
 import {
     PlaylistWrapper,
@@ -13,38 +17,45 @@ import {
 
 export default memo(function Playlist() {
     const [currentPage, setCurrentPage] = useState(1);
+    const [isShowCatePanel, setIsShowCatePanel] = useState(false);
 
     const dispatch = useDispatch();
-    const { allPlaylist, total } = useSelector(state => ({
-        allPlaylist: state.getIn(['playlist', 'allPlaylist']),
+    const { playlistDetail, total, currentCat } = useSelector(state => ({
+        playlistDetail: state.getIn(['playlist', 'playlistDetail']),
+        currentCat: state.getIn(['playlist', 'currentCat']),
         total: state.getIn(['playlist', 'total'])
-    }), shallowEqual)
+    }), shallowEqual);
 
     useEffect(() => {
-        dispatch(getAllPlaylistAction(currentPage, 35))
-    }, [dispatch, currentPage])
+        dispatch(getAllPlaylistAction(currentPage, 35, currentCat))
+    }, [dispatch, currentPage, currentCat]);
+    useEffect(() => {
+        dispatch(getAllPlaylistCategoryAction());
+    }, [dispatch]);
 
     const pageChange = useCallback(page => {
-        console.log(page);
         setCurrentPage(page);
-    }, [])
+    }, []);
 
     return (
         <PlaylistWrapper className="wrap-v2">
             <div className="head">
                 <div className="left">
-                    <span>全部</span>
-                    <span className="category">选择分类 <i className="sprite_icon2" /></span>
+                    <span>{currentCat}</span>
+                    <span className="category" onClick={() => setIsShowCatePanel(!isShowCatePanel)} >
+                        选择分类
+                        <i className="sprite_icon2" />
+                    </span>
                 </div>
                 <button>热门</button>
             </div>
 
             {
-                allPlaylist?.length ?
+                playlistDetail?.length ?
                     (<PlaylistBodyWrapper>
                         <div className="all-playlist">
                             {
-                                allPlaylist.map(item => {
+                                playlistDetail.map(item => {
                                     return (
                                         <div key={item.id} className="item">
                                             <SongsCover info={item} infoType='playlist' />
@@ -59,6 +70,8 @@ export default memo(function Playlist() {
 
                     </PlaylistBodyWrapper>) : null
             }
+            {/* {isShowCatePanel && <CategoryPanel />} */}
+            {<CategoryPanel isShowCatePanel={isShowCatePanel} />}
         </PlaylistWrapper>
     )
 })

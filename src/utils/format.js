@@ -33,3 +33,16 @@ export function formatDate(timeStamp, fmt) {
 function padLeftZero(str) {
   return ('00' + str).substr(str.length);
 };
+
+// 复杂对象数组去重
+export function noRepeatArr(originalArr) {
+  let obj = {};
+  let newNoRepeatArr = [];
+  newNoRepeatArr = originalArr.reduce((prev, item) => {
+    if (!obj[item.id]) {
+      obj[item.id] = true && prev.push(item)
+    }
+    return prev;
+  }, []);
+  return newNoRepeatArr;
+}

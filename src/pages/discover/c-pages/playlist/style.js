@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Pagination } from 'antd';
 
 export const PlaylistWrapper = styled.div`
+    position: relative;
     padding: 40px 40px 80px 40px;
     background-color: #fff;
 
@@ -39,6 +40,7 @@ export const PlaylistWrapper = styled.div`
                     display: inline-block;
                     width: 8px;
                     height: 5px;
+                    margin-left: 5px;
                     background-position: -70px -543px;
                 }
             }

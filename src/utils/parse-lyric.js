@@ -11,7 +11,6 @@
 ]
  */
 const parseEXP = /\[(\d{2}):(\d{2})\.(\d{2,3})\]/;
-
 export function parseLyric(lyricString) {
     const lyricArray = lyricString?.split('\n');
     // console.log(lyricArray);

@@ -5,6 +5,7 @@ import HeaderLine from '@/components/header-line';
 import SongsCover from '@/components/songs-cover';
 
 import { getHotRecommendsAction } from '../../store/actionCreators';
+import { getHotPlaylistCategoryAction } from '../../../playlist/store/actionCreators';
 import { HotRecommendWrapper } from './style';
 
 export default memo(function HotRecommend() {
@@ -12,18 +13,22 @@ export default memo(function HotRecommend() {
 
   //redux hooks
   const dispatch = useDispatch();
-  const { hotRecommends } = useSelector(state => ({
-    hotRecommends: state.getIn(['recommend', 'hotRecommends'])
+  const { hotRecommends, hotPlaylistCategory } = useSelector(state => ({
+    hotRecommends: state.getIn(['recommend', 'hotRecommends']),
+    hotPlaylistCategory: state.getIn(['playlist', 'hotPlaylistCategory'])
   }), shallowEqual);
 
   //other hooks
   useEffect(() => {
     dispatch(getHotRecommendsAction(8));
+    dispatch(getHotPlaylistCategoryAction());
   }, [dispatch]);
+
+  const HeaderLineTabs = hotPlaylistCategory?.slice(0, 5);
 
   return (
     <HotRecommendWrapper>
-      <HeaderLine title="热门推荐" tabs={["华语", "流行", "摇滚", "民谣", "电子"]} to='/discover/playlist' />
+      <HeaderLine title="热门推荐" tabs={HeaderLineTabs} to='/discover/playlist' />
       <div className="recommend-list">
         {
           hotRecommends?.map(item => {
