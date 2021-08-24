@@ -24,12 +24,29 @@ export function getHotPlaylistCategory() {
   })
 }
 
+// 首页新碟上架
+export function getHomepageNewDiscs() {
+  return request({
+    url: '/album/newest'
+  })
+}
+
 // 新碟上架
-export function getNewDiscs(limit) {
+/* 可选参数 :
+limit: 取出数量 , 默认为 50
+offset: 偏移数量 , 用于分页 , 如 :( 页数 -1)*50, 其中 50 为 limit 的值 , 默认 为 0
+area: ALL:全部,ZH:华语,EA:欧美,KR:韩国,JP:日本
+type : new:全部 hot:热门,默认为 new
+year : 年,默认本年
+month : 月,默认本月 */
+export function getNewDiscs(limit = 50, page = 1, type, area = 'ALL') {
   return request({
     url: '/top/album',
     params: {
-      limit
+      offset: (page - 1) * limit,
+      limit,
+      type,
+      area
     }
   })
 }
@@ -76,13 +93,14 @@ export function getPlaylistComment(playlistId) {
 cat: tag, 比如 " 华语 "、" 古风 " 、" 欧美 "、" 流行 ", 默认为 "全部",可从歌单分类接口获取(/playlist/catlist)
 limit: 取出歌单数量 , 默认为 50
 offset: 偏移数量 , 用于分页 , 如 :( 评论页数 -1)*50, 其中 50 为 limit 的值 */
-export function getAllPlaylist(page = 1, limit = 50, cat = "全部") {
+export function getAllPlaylist(page = 1, limit = 50, cat = '全部', order = 'hot') {
   return request({
     url: '/top/playlist',
     params: {
       offset: (page - 1) * limit,
       limit,
-      cat
+      cat,
+      order
     }
   })
 }

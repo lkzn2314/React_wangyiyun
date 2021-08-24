@@ -64,6 +64,7 @@ export const PlaylistWrapper = styled.div`
 
 export const PlaylistBodyWrapper = styled.div`
     position: relative;
+    padding-bottom: 30px;
 
     .all-playlist {
         display: flex;
@@ -86,8 +87,8 @@ export const PaginationWrapper = styled(Pagination)`
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    bottom: -50px;
     width: 500px;
+    margin-top: 20px;
     color: #333;
 
     .ant-pagination-item {
@@ -114,6 +115,10 @@ export const PaginationWrapper = styled(Pagination)`
 
         &:hover {
             border-color: #666;
+
+            .anticon {
+                color: #333;
+            }
         }
     }
 
@@ -125,4 +130,5 @@ export const PaginationWrapper = styled(Pagination)`
             color: #fff;
         }
     }
+
 `

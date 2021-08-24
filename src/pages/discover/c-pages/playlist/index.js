@@ -67,10 +67,8 @@ export default memo(function Playlist() {
                         <PaginationWrapper className="sprite_button2" current={currentPage} pageSize={35} total={total}
                             showSizeChanger={false} showTitle={false}
                             onChange={page => pageChange(page)} />
-
                     </PlaylistBodyWrapper>) : null
             }
-            {/* {isShowCatePanel && <CategoryPanel />} */}
             {<CategoryPanel isShowCatePanel={isShowCatePanel} />}
         </PlaylistWrapper>
     )

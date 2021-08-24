@@ -3,7 +3,7 @@ import * as actionTypes from './constants';
 import {
   getBanners,
   getHotRecommends,
-  getNewDiscs,
+  getHomepageNewDiscs,
   getRankings
 } from '@/network/discover';
 
@@ -39,10 +39,9 @@ const changeNewDiscsAction = res => ({
   newDiscs: res.albums
 })
 
-export const getNewDiscsAction = limit => {
+export const getNewDiscsAction = () => {
   return dispatch => {
-    getNewDiscs(limit).then(res => {
-      // console.log(res);
+    getHomepageNewDiscs().then(res => {
       dispatch(changeNewDiscsAction(res))
     })
   }

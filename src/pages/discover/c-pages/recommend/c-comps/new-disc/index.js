@@ -21,7 +21,7 @@ export default memo(function NewDisc() {
 
   const carouselRef = useRef();
   useEffect(() => {
-    dispatch(getNewDiscsAction(15))
+    dispatch(getNewDiscsAction())
   }, [dispatch]);
 
   return (
@@ -33,12 +33,12 @@ export default memo(function NewDisc() {
         <div className="disc">
           <Carousel dots={false} speed={1200} ref={carouselRef}>
             {
-              [0, 1, 2].map(index => {
+              [0, 1].map(index => {
                 return (
                   <div className="disc-list" key={index}>
                     {
                       newDiscs?.slice(index * 5, (index + 1) * 5).map(item => {
-                        return (<DiscsCover key={item.id} info={item} />)
+                        return (<DiscsCover key={item.id} info={item} width="118px" height="150px" />)
                       })
                     }
                   </div>
@@ -48,21 +48,6 @@ export default memo(function NewDisc() {
           </Carousel>
         </div>
       </Content>
-      {/* <Carousel className="carousel">
-        {
-          [0, 1].map(index => {
-            return (
-              <div className="disc-list" key={index}>
-                {
-                  newDiscs.slice(index * 5, (index + 1) * 5).map(item => {
-                    return (<DiscsCover key={item.id} info={item} />)
-                  })
-                }
-              </div>
-            )
-          })
-        }
-      </Carousel> */}
     </DiscWrapper >
   )
 })

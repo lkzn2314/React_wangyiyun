@@ -8,17 +8,16 @@ import { formatImgSize } from '@/utils/format';
 import { DiscsCoverWrapper } from './style';
 
 export default memo(function DiscsCover(props) {
-    const { info } = props;
+    const { info, width, height } = props;
 
     const dispatch = useDispatch();
 
     const playMusic = discId => {
-        console.log(discId);
         dispatch(getDiscDetailAction(discId));
     }
 
     return (
-        <DiscsCoverWrapper>
+        <DiscsCoverWrapper width={width} height={height}>
             <div className="cover">
                 <img src={formatImgSize(info.picUrl, 100)} alt={info.name} />
                 <i className="play sprite_icon" onClick={e => playMusic(info.id)} />
