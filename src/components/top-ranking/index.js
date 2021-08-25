@@ -1,19 +1,24 @@
 import React, { memo } from 'react';
 import { useDispatch } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import { getCurrentSongAction } from '@/pages/player/store/actionCreators';
+import { changeCurrentIndexAction } from '@/pages/discover/c-pages/musiclist/store/actionCreators';
 
 import { formatImgSize } from '@/utils/format';
 import { TopRankingWrapper } from './style';
 
-export default memo(function TopRanking(props) {
-  const { info } = props;
-
+function TopRanking(props) {
+  const { info, currentIndex, history } = props;
   const dispatch = useDispatch();
 
   const playMusic = songId => {
-    // console.log(songId);
     dispatch(getCurrentSongAction(songId));
+  }
+
+  const goToMusiclist = index => {
+    history.push('/discover/musiclist');
+    dispatch(changeCurrentIndexAction(index));
   }
 
   return (
@@ -51,10 +56,13 @@ export default memo(function TopRanking(props) {
           })
         }
       </div>
-
-      <div className="footer">
-        <a href="/todo">查看全部 &gt;</a>
-      </div>
+      {
+        info?.tracks?.length ?
+          <div className="footer">
+            <div className="more" onClick={() => goToMusiclist(currentIndex)}>查看全部 &gt;</div>
+          </div> : null
+      }
     </TopRankingWrapper>
   )
-})
+}
+export default withRouter(memo(TopRanking))

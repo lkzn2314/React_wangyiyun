@@ -28,9 +28,9 @@ export default memo(function Ranking() {
     <RankingWrapper>
       <HeaderLine title="榜单" to="/discover/musiclist" />
       <div className="ranking-list">
-        <TopRanking info={upRankings} />
-        <TopRanking info={newRankings} />
-        <TopRanking info={originRankings} />
+        <TopRanking info={upRankings} currentIndex={0} />
+        <TopRanking info={newRankings} currentIndex={1} />
+        <TopRanking info={originRankings} currentIndex={2} />
       </div>
     </RankingWrapper>
   )

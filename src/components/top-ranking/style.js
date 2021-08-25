@@ -138,8 +138,13 @@ export const TopRankingWrapper = styled.div`
     height: 32px;
     margin-right: 32px;
 
-    a {
+    .more {
       color: #000;
+
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+      }
     }
   }
 `

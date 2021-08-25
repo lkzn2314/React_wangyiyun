@@ -40,9 +40,11 @@ export default memo(function AllDisc() {
                     })
                 }
             </div>
-            <PaginationWrapper className="sprite_button2" current={currentPage} pageSize={35} total={total}
-                showSizeChanger={false} showTitle={false}
-                onChange={page => pageChange(page)} />
+            {
+                allDiscs?.length ? <PaginationWrapper className="sprite_button2" current={currentPage} pageSize={35} total={total}
+                    showSizeChanger={false} showTitle={false}
+                    onChange={page => pageChange(page)} /> : null
+            }
         </AllDiscWrapper>
     )
 })
