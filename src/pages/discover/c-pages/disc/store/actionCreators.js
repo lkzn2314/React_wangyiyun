@@ -14,6 +14,11 @@ const changeTotalAction = total => ({
     total
 })
 
+export const changeCurrentAreaAction = currentArea => ({
+    type: actionTypes.CHANGE_CURRENT_AREA,
+    currentArea
+})
+
 export const getNewDiscsAction = (limit, page = 1, type, area) => {
     return dispatch => {
         getNewDiscs(limit, page, type, area).then(res => {

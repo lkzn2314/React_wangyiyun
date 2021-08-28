@@ -15,7 +15,8 @@ import {
     PaginationWrapper
 } from './style';
 
-export default memo(function Playlist() {
+export default memo(function Playlist(props) {
+    const { history } = props;
     const [currentPage, setCurrentPage] = useState(1);
     const [isShowCatePanel, setIsShowCatePanel] = useState(false);
 
@@ -35,7 +36,8 @@ export default memo(function Playlist() {
 
     const pageChange = useCallback(page => {
         setCurrentPage(page);
-    }, []);
+        page === 1 ? history.push('/discover/playlist') : history.push(`/discover/playlist/?cat=${currentCat}&limit=35&offset=${35 * (page - 1)}`);
+    }, [history, currentCat]);
 
     return (
         <PlaylistWrapper className="wrap-v2">

@@ -13,22 +13,46 @@ export default memo(function AllDisc() {
     const [currentPage, setCurrentPage] = useState(1)
 
     const dispatch = useDispatch();
-    const { allDiscs, total } = useSelector(state => ({
+    const { allDiscs, total, currentArea } = useSelector(state => ({
         allDiscs: state.getIn(['disc', 'allDiscs']),
-        total: state.getIn(['disc', 'total'])
+        total: state.getIn(['disc', 'total']),
+        currentArea: state.getIn(['disc', 'currentArea'])
     }), shallowEqual);
 
     useEffect(() => {
-        dispatch(getNewDiscsAction(35, currentPage, 'new', 'ALL'));
-    }, [dispatch, currentPage]);
+        dispatch(getNewDiscsAction(35, currentPage, 'new', currentArea));
+    }, [dispatch, currentPage, currentArea]);
 
     const pageChange = useCallback(page => {
         setCurrentPage(page)
     }, []);
 
+    const tabs = [
+        {
+            name: '全部',
+            area: 'ALL'
+        },
+        {
+            name: '华语',
+            area: 'ZH'
+        },
+        {
+            name: '欧美',
+            area: 'EA'
+        },
+        {
+            name: '韩国',
+            area: 'KR'
+        },
+        {
+            name: '日本',
+            area: 'JP'
+        }
+    ];
+
     return (
         <AllDiscWrapper>
-            <HeaderLine2 title="全部新碟" tabs={['全部', '华语', '欧美', '韩国', '日本']} />
+            <HeaderLine2 title="全部新碟" tabs={tabs} />
             <div className="disc-list">
                 {
                     allDiscs?.map(item => {

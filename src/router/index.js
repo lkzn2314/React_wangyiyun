@@ -36,17 +36,17 @@ export default [
         component: Musiclist
       },
       {
-        path: '/discover/playlist',
-        component: Playlist
-      },
-      {
         path: '/discover/artist',
         component: Artist
       },
       {
         path: '/discover/album',
         component: Disc
-      }
+      },
+      {
+        path: '/discover/:playlist',
+        component: Playlist
+      },
     ]
   }
 ]

@@ -3,7 +3,8 @@ import * as actionTypes from './constants';
 
 const initialState = Map({
     allDiscs: [],
-    total: 0
+    total: 0,
+    currentArea: 'ALL'
 })
 
 export default function reducer(state = initialState, action) {
@@ -12,6 +13,8 @@ export default function reducer(state = initialState, action) {
             return state.set('allDiscs', action.allDiscs);
         case actionTypes.CHANGE_TOTAL:
             return state.set('total', action.total);
+        case actionTypes.CHANGE_CURRENT_AREA:
+            return state.set('currentArea', action.currentArea);
         default:
             return state;
     }

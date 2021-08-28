@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import { changeCurrentCatAction } from '../../store/actionCreators';
 
@@ -10,8 +11,8 @@ import {
     CategoryImg
 } from './style';
 
-export default memo(function CategoryPanel(props) {
-    const { isShowCatePanel } = props;
+function CategoryPanel(props) {
+    const { isShowCatePanel, history } = props;
 
     const dispatch = useDispatch();
     const { allPlaylistCategory } = useSelector(state => ({
@@ -19,7 +20,8 @@ export default memo(function CategoryPanel(props) {
     }), shallowEqual);
 
     const changCatClick = catName => {
-        dispatch(changeCurrentCatAction(catName))
+        dispatch(changeCurrentCatAction(catName));
+        catName === "全部" ? history.push('/discover/playlist') : history.push(`/discover/playlist/?cat=${catName}`);
     };
 
     return (
@@ -66,4 +68,6 @@ export default memo(function CategoryPanel(props) {
             </CategoryPanelWrapper>}
         </>
     )
-})
+}
+
+export default withRouter(memo(CategoryPanel))
