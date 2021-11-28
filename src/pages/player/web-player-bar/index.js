@@ -5,7 +5,6 @@ import { Slider, message, Tooltip } from 'antd';
 import PlaylistPanel from '../web-player-panel';
 
 import {
-  // getCurrentSongAction,
   changeSequenceAction,
   changeMusicAction,
   changeLyricItemIndexAction
@@ -33,7 +32,7 @@ export default memo(function WebPlayerBar() {
   const [loopTitle, setLoopTitle] = useState('循环');
   const [isLyricShow, setIsLyricShow] = useState(false);
   const [isShowBar, setIsShowBar] = useState(false);
-  const [isFixedPostion, setIsFixedPosition] = useState(false);
+  const [isFixedPostion, setIsFixedPosition] = useState(true);
   const [isShowPanel, setIsShowPanel] = useState(false);
 
   const dispatch = useDispatch();
@@ -46,9 +45,6 @@ export default memo(function WebPlayerBar() {
   }), shallowEqual);
 
   const audioRef = useRef();
-  /* useEffect(() => {
-    dispatch(getCurrentSongAction(167876))
-  }, [dispatch]); */
 
   // 监听鼠标事件
   useEffect(() => {

@@ -5,6 +5,7 @@ const LKDiscover = lazy(_ => import('@/pages/discover'));
 const Recommend = lazy(_ => import('@/pages/discover/c-pages/recommend'));
 const Musiclist = lazy(_ => import('@/pages/discover/c-pages/musiclist'));
 const Playlist = lazy(_ => import('@/pages/discover/c-pages/playlist'));
+const Djradio = lazy(_ => import('@/pages/discover/c-pages/djradio'));
 const Artist = lazy(_ => import('@/pages/discover/c-pages/artist'));
 const Disc = lazy(_ => import('@/pages/discover/c-pages/disc'));
 
@@ -34,6 +35,10 @@ export default [
       {
         path: '/discover/musiclist',
         component: Musiclist
+      },
+      {
+        path: '/discover/djradio',
+        component: Djradio
       },
       {
         path: '/discover/artist',

@@ -64,7 +64,7 @@ export function getRankings(id) {
 // 歌手
 export function getArtists(limit) {
   return request({
-    url: '/top/artists',
+    url: '/artist/list',
     params: {
       limit
     }
