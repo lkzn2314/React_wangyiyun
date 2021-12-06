@@ -11,7 +11,7 @@ export default memo(function HeaderLine(props) {
 
     const dispatch = useDispatch();
     const goTOPlaylistAndChangeCatClick = catName => {
-        console.log(catName);
+        // console.log(catName);
         dispatch(changeCurrentCatAction(catName));
     }
 

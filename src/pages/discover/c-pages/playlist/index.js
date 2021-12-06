@@ -38,7 +38,7 @@ export default memo(function Playlist(props) {
         setCurrentPage(page);
         page === 1 ? history.push('/discover/playlist') : history.push(`/discover/playlist/?cat=${currentCat}&limit=35&offset=${35 * (page - 1)}`);
     }, [history, currentCat]);
-
+		
     return (
         <PlaylistWrapper className="wrap-v2">
             <div className="head">
@@ -71,7 +71,7 @@ export default memo(function Playlist(props) {
                             onChange={page => pageChange(page)} />
                     </PlaylistBodyWrapper>) : null
             }
-            {<CategoryPanel isShowCatePanel={isShowCatePanel} />}
+            { isShowCatePanel && <CategoryPanel closePanelClick={() => setIsShowCatePanel(false)} />}
         </PlaylistWrapper>
     )
 })
