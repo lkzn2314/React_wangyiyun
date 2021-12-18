@@ -208,9 +208,44 @@ export const Operator = styled.div`
     width: 126px;
     padding-left: 13px;
     background-position: -147px -248px;
-    
+
     .volume {
+      position: relative;
       background-position: -2px -248px;
+    }
+
+    .ant-slider {
+      position: absolute;
+      left: 74px;
+      top: -132px;
+      width: 32px;
+      height: 113px;
+      padding-left: 13px;
+      background-position: 0 -503px;
+      z-index: 9;
+
+      .ant-slider-rail {
+        cursor: default;
+        width: 4px;
+        height: 93px;
+        margin-bottom: 5px;
+        background: none;
+      }
+
+      .ant-slider-track {
+        cursor: default;
+        width: 4px;
+        margin-bottom: 5px;
+        background-color: #c70c0c;
+      }
+
+      .ant-slider-handle {
+        cursor: default;
+        width: 18px;
+        height: 20px;
+        border: none;
+        background: url(${require("@/assets/img/sprite_icon.png")}) -40px -250px;
+      }
     }
 
     .loop {

@@ -34,6 +34,8 @@ export default memo(function WebPlayerBar() {
   const [isShowBar, setIsShowBar] = useState(false);
   const [isFixedPostion, setIsFixedPosition] = useState(true);
   const [isShowPanel, setIsShowPanel] = useState(false);
+  const [isShowVolumeSlider, setIsShowVolumeSlider] = useState(false);
+  const [volumeValue, setVolumeValue] = useState(100);
 
   const dispatch = useDispatch();
   const { currentSong, playList, sequence, lyric, lyricItemIndex } = useSelector(state => ({
@@ -160,6 +162,16 @@ export default memo(function WebPlayerBar() {
     }
   }
 
+  //音量按钮
+  const changeVolumnClick = () => {
+    setIsShowVolumeSlider(!isShowVolumeSlider)
+  }
+
+  const volumeValueChange = value => {
+    setVolumeValue(value);
+    audioRef.current.volume = 0.01 * value;
+  }
+
   return (
     <WebPlayerBarWrapper className={isFixedPostion ? "playbar_sprite fixed-position" : "playbar_sprite"} isShowBar={isShowBar}>
       <div className="content wrap-v2">
@@ -197,11 +209,18 @@ export default memo(function WebPlayerBar() {
             <Tooltip title="歌词" color='#191919'>
               <button className="btn lyric playbar_new" onClick={() => changeLyricShow()} />
             </Tooltip>
-            <button className="btn favor playbar_sprite"></button>
-            <button className="btn share playbar_sprite"></button>
+            <button className="btn favor playbar_sprite"/>
+            <button className="btn share playbar_sprite"/>
           </div>
           <div className="right" >
-            <button className="btn volume playbar_sprite" />
+            <button className="btn volume playbar_sprite" onClick={() => changeVolumnClick()} />
+              { isShowVolumeSlider && <Slider className="playbar_sprite"
+                  value={volumeValue}
+                  tooltipVisible={false}
+                  vertical
+                  onChange={value => volumeValueChange(value)}
+                  /> 
+              }
             <Tooltip title={loopTitle} color='#191919' mouseLeaveDelay={0}>
               <button className="btn loop playbar_sprite" onClick={() => changeSequence()} />
             </Tooltip>
