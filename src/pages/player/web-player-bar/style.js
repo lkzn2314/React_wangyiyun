@@ -211,7 +211,7 @@ export const Operator = styled.div`
 
     .volume {
       position: relative;
-      background-position: -2px -248px;
+      background-position: ${props => props.volumeValue === 0 ? '-104px -69px' : '-2px -248px'};
     }
 
     .ant-slider {

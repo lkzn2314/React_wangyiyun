@@ -35,7 +35,7 @@ export default memo(function WebPlayerBar() {
   const [isFixedPostion, setIsFixedPosition] = useState(true);
   const [isShowPanel, setIsShowPanel] = useState(false);
   const [isShowVolumeSlider, setIsShowVolumeSlider] = useState(false);
-  const [volumeValue, setVolumeValue] = useState(100);
+  const [volumeValue, setVolumeValue] = useState(50);
 
   const dispatch = useDispatch();
   const { currentSong, playList, sequence, lyric, lyricItemIndex } = useSelector(state => ({
@@ -63,6 +63,10 @@ export default memo(function WebPlayerBar() {
       setIsPlaying(false)
     });
   }, [currentSong]);
+
+  useEffect(() => {
+    audioRef.current.volume = 0.5;
+  }, [])
 
   const picUrl = currentSong.al?.picUrl || 'http://s4.music.126.net/style/web2/img/default/default_album.jpg?limit=34x34';
   const singer = (currentSong.ar && currentSong.ar[0].name) || '未知歌手';
@@ -204,7 +208,7 @@ export default memo(function WebPlayerBar() {
           </div>
         </PlayInfo>
 
-        <Operator sequence={sequence}>
+        <Operator sequence={sequence} volumeValue={volumeValue}>
           <div className="left">
             <Tooltip title="歌词" color='#191919'>
               <button className="btn lyric playbar_new" onClick={() => changeLyricShow()} />
