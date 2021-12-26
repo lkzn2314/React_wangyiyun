@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { getCurrentSongAction } from '@/pages/player/store/actionCreators';
+import { getCurrentSongAction, getPlaylistDetailAction } from '@/pages/player/store/actionCreators';
 import { changeCurrentIndexAction } from '@/pages/discover/c-pages/musiclist/store/actionCreators';
 
 import { formatImgSize } from '@/utils/format';
@@ -20,6 +20,10 @@ function TopRanking(props) {
     history.push('/discover/musiclist');
     dispatch(changeCurrentIndexAction(index));
   }
+	
+	const playRankingClick = playlistId => {
+		dispatch(getPlaylistDetailAction(playlistId));
+	}
 
   return (
     <TopRankingWrapper>
@@ -31,8 +35,8 @@ function TopRanking(props) {
         <div className="info">
           <a href="/todo">{info?.name}</a>
           <div>
-            <button className="btn play sprite_02"></button>
-            <button className="btn favor sprite_02"></button>
+            <button className="btn play sprite_02" onClick={() => playRankingClick(info?.id)}/>
+            <button className="btn favor sprite_02"/>
           </div>
         </div>
       </div>
