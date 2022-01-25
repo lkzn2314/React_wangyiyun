@@ -222,7 +222,7 @@ export const Operator = styled.div`
       height: 113px;
       padding-left: 13px;
       background-position: 0 -503px;
-      z-index: 9;
+      z-index: 999 !important;
 
       .ant-slider-rail {
         cursor: default;
